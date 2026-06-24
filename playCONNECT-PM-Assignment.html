@@ -503,21 +503,23 @@
       /* SLIDE 3 */
       .sh-layout {
         display: flex;
-        gap: 20px;
+        flex-direction: column;
+        gap: 14px;
         flex: 1;
         min-height: 0;
       }
       .sh-matrix {
-        flex: 1.6;
+        flex: 1;
+        min-height: 0;
         display: flex;
         flex-direction: column;
         gap: 6px;
       }
       .sh-discovery {
-        flex: 1;
+        flex: 0 0 auto;
         display: flex;
-        flex-direction: column;
-        gap: 6px;
+        flex-direction: row;
+        gap: 8px;
       }
       .sh-row {
         display: grid;
@@ -1445,9 +1447,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 2 ══ -->
       <div class="slide" id="s2">
-        <div class="slide-header">
-          <div class="slide-label">Problem Framing</div>
-        </div>
         <h2>The <span class="accent">Problem</span></h2>
         <div class="rule"></div>
         <div class="pain-grid" style="margin-top: 14px">
@@ -1503,9 +1502,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 3 ══ -->
       <div class="slide" id="s3">
-        <div class="slide-header">
-          <div class="slide-label">Problem Framing · Discovery</div>
-        </div>
         <h2>Stakeholder <span class="accent">Matrix</span></h2>
         <div class="rule"></div>
         <div class="sh-layout" style="margin-top: 12px">
@@ -1576,7 +1572,7 @@ and letting marketing move faster.
               </div>
             </div>
           </div>
-          <div class="sh-discovery">
+          <div style="display:flex;flex-direction:column;gap:6px;flex:0 0 auto;">
             <div
               style="
                 font-family: var(--font-head);
@@ -1585,58 +1581,57 @@ and letting marketing move faster.
                 letter-spacing: 2px;
                 text-transform: uppercase;
                 color: var(--accent);
-                margin-bottom: 4px;
               "
             >
               Discovery Sprint
             </div>
-            <div class="disc-week">
-              <div class="disc-wk">W1</div>
-              <div>
-                <div class="disc-label">Marketing + Game Teams</div>
-                <div class="disc-body">
-                  Campaign workflows, reward types, trigger event inventory per
-                  game
+            <div class="sh-discovery">
+              <div class="disc-week">
+                <div class="disc-wk">W1</div>
+                <div>
+                  <div class="disc-label">Marketing + Game Teams</div>
+                  <div class="disc-body">
+                    Campaign workflows, reward types, trigger event inventory per game
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="disc-week">
-              <div class="disc-wk">W2</div>
-              <div>
-                <div class="disc-label">Engineering / Platform</div>
-                <div class="disc-body">
-                  API capabilities, SDK extensibility, data schema constraints
+              <div class="disc-week">
+                <div class="disc-wk">W2</div>
+                <div>
+                  <div class="disc-label">Engineering / Platform</div>
+                  <div class="disc-body">
+                    API capabilities, SDK extensibility, data schema constraints
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="disc-week">
-              <div class="disc-wk">W3</div>
-              <div>
-                <div class="disc-label">BI / Data + LiveOps</div>
-                <div class="disc-body">
-                  Reporting needs, monitoring thresholds, alert requirements
+              <div class="disc-week">
+                <div class="disc-wk">W3</div>
+                <div>
+                  <div class="disc-label">BI / Data + LiveOps</div>
+                  <div class="disc-body">
+                    Reporting needs, monitoring thresholds, alert requirements
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="disc-week">
-              <div class="disc-wk">W4</div>
-              <div>
-                <div class="disc-label">Legal / CS</div>
-                <div class="disc-body">
-                  Compliance constraints, promo rules, support escalation paths
+              <div class="disc-week">
+                <div class="disc-wk">W4</div>
+                <div>
+                  <div class="disc-label">Legal / CS</div>
+                  <div class="disc-body">
+                    Compliance constraints, promo rules, support escalation paths
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="disc-week"
-              style="background: var(--glow); border-color: var(--border2)"
-            >
-              <div class="disc-wk" style="color: var(--muted2)">∞</div>
-              <div>
-                <div class="disc-label">Players (indirect)</div>
-                <div class="disc-body">
-                  CS ticket themes, BI retention data, A/B test signals from
-                  past promos
+              <div
+                class="disc-week"
+                style="background: var(--glow); border-color: var(--border2)"
+              >
+                <div class="disc-wk" style="color: var(--muted2)">∞</div>
+                <div>
+                  <div class="disc-label">Players (indirect)</div>
+                  <div class="disc-body">
+                    CS ticket themes, BI retention data, A/B test signals from past promos
+                  </div>
                 </div>
               </div>
             </div>
@@ -1646,9 +1641,7 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 4 ══ -->
       <div class="slide" id="s4">
-        <div class="slide-header">
-        </div>
-        <h2>Platform <span class="accent">Alignment</span></h2>
+        <h2>Product <span class="accent">Alignment</span></h2>
         <div class="rule"></div>
         <div class="comp-grid5" style="margin-top: 12px">
           <!-- SDK -->
@@ -1717,12 +1710,11 @@ and letting marketing move faster.
               </div>
               <div class="comp-list">
                 <div class="comp-list-item assume">
-                  Does AVA expose a synchronous eligibility API with &lt;100ms
-                  SLA?
+                  Does AVA handle synchronous eligibility API with low latency ?
                 </div>
                 <div class="comp-list-item assume">
-                  Can eligibility rules be updated on live campaigns without
-                  restart?
+                  Can AVA support complex eligibility rules (e.g., VIP tier +
+                  opt-in + segment)?
                 </div>
               </div>
             </div>
@@ -1738,10 +1730,10 @@ and letting marketing move faster.
               <div class="comp-section-label">Utilization</div>
               <div class="comp-list">
                 <div class="comp-list-item util">
-                  Build and publish cross-game campaigns without engineering
+                  Add features for building and publishing cross-game campaigns without engineering
                 </div>
                 <div class="comp-list-item util">
-                  Monitor live campaign performance via analytics dashboard
+                  Add feature to monitor live campaign performance via analytics dashboard
                 </div>
                 <div class="comp-list-item util">
                   Pause, edit, or cancel campaigns in real-time
@@ -1775,7 +1767,7 @@ and letting marketing move faster.
               <div class="comp-section-label">Utilization</div>
               <div class="comp-list">
                 <div class="comp-list-item util">
-                  Generate unique, player-specific promo codes per campaign
+                  Generate unique, promo codes per campaign
                   trigger
                 </div>
                 <div class="comp-list-item util">
@@ -1792,11 +1784,10 @@ and letting marketing move faster.
               </div>
               <div class="comp-list">
                 <div class="comp-list-item assume">
-                  Does Coupon expose a REST API for programmatic, per-player
-                  code generation?
+                  Does Coupon expose a REST API for programmatic, per-campaign code generation and code usage tracking?
                 </div>
                 <div class="comp-list-item assume">
-                  Can codes be generated in real-time (not batch mode)?
+                  Are codes be generated in real-time or in batch mode?
                 </div>
               </div>
             </div>
@@ -1863,9 +1854,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 5 ══ -->
       <div class="slide" id="s5">
-        <div class="slide-header">
-          <div class="slide-label">Product Design · System Blueprint</div>
-        </div>
         <h2>System <span class="accent">Blueprint</span></h2>
         <div class="rule"></div>
         <div class="arch-wrap">
@@ -2040,9 +2028,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 6 ══ -->
       <div class="slide" id="s6">
-        <div class="slide-header">
-          <div class="slide-label">Product Design · Key Flows</div>
-        </div>
         <h2>Key <span class="accent">User Flows</span></h2>
         <div class="rule"></div>
         <div class="flow-layout" style="margin-top: 14px">
@@ -2189,9 +2174,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 7 ══ -->
       <div class="slide" id="s7">
-        <div class="slide-header">
-          <div class="slide-label">Product Design · Core Epics</div>
-        </div>
         <h2>
           Core <span class="accent">Epics</span>
           <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
@@ -2323,9 +2305,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 8 ══ -->
       <div class="slide" id="s8">
-        <div class="slide-header">
-          <div class="slide-label">Product Design · Core Epics</div>
-        </div>
         <h2>
           Core <span class="accent">Epics</span>
           <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
@@ -2456,9 +2435,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 9 ══ -->
       <div class="slide" id="s9">
-        <div class="slide-header">
-          <div class="slide-label">Project Planning · Roadmap</div>
-        </div>
         <h2>
           Phased <span class="accent">Roadmap</span>
           <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
@@ -2607,9 +2583,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 10 ══ -->
       <div class="slide" id="s10">
-        <div class="slide-header">
-          <div class="slide-label">Project Planning · Success Metrics</div>
-        </div>
         <h2>Success <span class="accent">Metrics</span></h2>
         <div class="rule"></div>
         <div class="metrics-layout" style="margin-top: 14px">
@@ -2683,9 +2656,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 11 ══ -->
       <div class="slide" id="s11">
-        <div class="slide-header">
-          <div class="slide-label">Project Planning · Rollout</div>
-        </div>
         <h2>Rollout & <span class="accent">Communication</span> Plan</h2>
         <div class="rule"></div>
         <div class="rollout-table" style="margin-top: 12px">
@@ -2765,9 +2735,6 @@ and letting marketing move faster.
 
       <!-- ══ SLIDE 12 ══ -->
       <div class="slide" id="s12">
-        <div class="slide-header">
-          <div class="slide-label">Project Planning · Risk Management</div>
-        </div>
         <h2>Risks & <span class="accent">Mitigation</span></h2>
         <div class="rule"></div>
         <div class="risks-layout" style="margin-top: 14px">
