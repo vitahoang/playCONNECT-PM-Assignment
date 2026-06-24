@@ -378,7 +378,6 @@
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 3px;
-        text-transform: uppercase;
         color: var(--muted);
       }
       .playconnect-logo span {
@@ -759,6 +758,45 @@
       }
 
       /* SLIDE 5 */
+      .arch-games-sdk-wrap {
+        display: grid;
+        grid-template-columns: repeat(4, 110px);
+        gap: 8px;
+      }
+      .arch-game-sdk-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .arch-conn-v {
+        width: 1px;
+        height: 8px;
+        background: var(--border2);
+      }
+      .arch-box.sdk {
+        background: var(--glow);
+        border-color: var(--border2);
+        color: var(--accent);
+        font-size: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .arch-fanin-connector {
+        width: 464px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .arch-fanin-bar {
+        width: 100%;
+        height: 1px;
+        background: var(--border2);
+      }
+      .arch-fanin-drop {
+        width: 1px;
+        height: 14px;
+        background: var(--border2);
+      }
       .arch-wrap {
         flex: 1;
         display: flex;
@@ -1857,78 +1895,57 @@ and letting marketing move faster.
         <h2>System <span class="accent">Blueprint</span></h2>
         <div class="rule"></div>
         <div class="arch-wrap">
+          <!-- Games + SDK pairs -->
+          <div class="arch-games-sdk-wrap">
+            <div class="arch-game-sdk-col">
+              <div class="arch-box game">MyVegas</div>
+              <div class="arch-conn-v"></div>
+              <div class="arch-box sdk">SDK</div>
+              <div class="arch-conn-v"></div>
+            </div>
+            <div class="arch-game-sdk-col">
+              <div class="arch-box game">POP! Slots</div>
+              <div class="arch-conn-v"></div>
+              <div class="arch-box sdk">SDK</div>
+              <div class="arch-conn-v"></div>
+            </div>
+            <div class="arch-game-sdk-col">
+              <div class="arch-box game">MGM</div>
+              <div class="arch-conn-v"></div>
+              <div class="arch-box sdk">SDK</div>
+              <div class="arch-conn-v"></div>
+            </div>
+            <div class="arch-game-sdk-col">
+              <div class="arch-box game">Konami</div>
+              <div class="arch-conn-v"></div>
+              <div class="arch-box sdk">SDK</div>
+              <div class="arch-conn-v"></div>
+            </div>
+          </div>
+          <!-- Fan-in connector: horizontal bar + center drop -->
+          <div class="arch-fanin-connector">
+            <div class="arch-fanin-bar"></div>
+            <div class="arch-fanin-drop"></div>
+          </div>
+          <!-- Event Stream -->
           <div class="arch-row">
-            <div class="arch-box game">MyVegas</div>
-            <div class="arch-box game">POP! Slots</div>
-            <div class="arch-box game">MGM</div>
-            <div class="arch-box game">Konami</div>
+            <div class="arch-box bus">Event Stream</div>
           </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin: 2px 0;
-            "
-          >
-            <div class="arch-label">SDK · trackEvent(type, payload)</div>
-            <div
-              style="width: 1px; height: 14px; background: var(--border2)"
-            ></div>
+          <div style="display:flex;flex-direction:column;align-items:center;margin:2px 0;">
+            <div style="width:1px;height:14px;background:var(--border2)"></div>
           </div>
-          <div class="arch-row">
-            <div class="arch-box bus">⚡ Event Bus (SQS / Kafka)</div>
-          </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin: 2px 0;
-            "
-          >
-            <div
-              style="width: 1px; height: 14px; background: var(--border2)"
-            ></div>
-          </div>
-          <div class="arch-row" style="gap: 24px; align-items: center">
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
-              "
-            >
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:600px;gap:8px;">
+            <div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
               <div class="arch-new-badge">NEW</div>
-              <div class="arch-box engine">⚙ Campaign Engine</div>
+              <div class="arch-box engine">Campaign Engine</div>
             </div>
-            <div
-              style="color: var(--border2); font-size: 13px; font-weight: 700"
-            >
-              ◄──────
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
-              "
-            >
-              <div
-                style="
-                  font-family: var(--font-head);
-                  font-size: 9px;
-                  font-weight: 700;
-                  letter-spacing: 2px;
-                  text-transform: uppercase;
-                  color: var(--muted2);
-                "
-              >
-                Campaign Rules DB
+            <div style="display:flex;align-items:center;gap:8px;padding-left:8px;">
+              <div style="color:var(--border2);font-size:13px;font-weight:700;white-space:nowrap;">◄────►</div>
+              <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;">
+                <div style="font-family:var(--font-head);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);">Campaign Rules DB</div>
+                <div class="arch-box ops">playOps Console</div>
               </div>
-              <div class="arch-box ops">🖥 playOps Console</div>
             </div>
           </div>
           <div class="arch-row" style="gap: 80px; margin-top: 6px">
@@ -1947,7 +1964,7 @@ and letting marketing move faster.
                   background: rgba(212, 160, 23, 0.4);
                 "
               ></div>
-              <div class="arch-box ava">🧠 AVA (Eligibility)</div>
+              <div class="arch-box ava">AVA (Eligibility)</div>
             </div>
             <div
               style="
@@ -1965,16 +1982,16 @@ and letting marketing move faster.
                 "
               ></div>
               <div class="arch-row" style="gap: 8px">
-                <div class="arch-box coupon">🎟 Coupon</div>
+                <div class="arch-box coupon">Coupon</div>
                 <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
                   ──►
                 </div>
-                <div class="arch-box robin">🏹 Robinhood</div>
+                <div class="arch-box robin">Robinhood</div>
                 <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
                   ──►
                 </div>
                 <div class="arch-box coupon" style="font-size: 11px">
-                  👤 Player Account
+                  Player Account
                 </div>
               </div>
             </div>
@@ -1996,11 +2013,11 @@ and letting marketing move faster.
             ></div>
           </div>
           <div class="arch-row" style="gap: 10px">
-            <div class="arch-box ledger">📒 Loyalty Ledger</div>
+            <div class="arch-box ledger">Loyalty Ledger</div>
             <div style="color: rgba(99, 102, 241, 0.5); font-weight: 700">
               ──►
             </div>
-            <div class="arch-box bi">📊 BI / Analytics</div>
+            <div class="arch-box bi">BI / Analytics</div>
           </div>
           <div class="arch-assumptions">
             <div class="arch-assumptions-title">Assumptions</div>
