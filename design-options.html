@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Options — playCONNECT</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #F0F0F0;
+  font-family: 'Outfit', sans-serif;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #666; margin-bottom: 32px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.option-wrap {
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.option-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #444; text-align: center;
+}
+
+.preview {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  aspect-ratio: 16/9;
+  position: relative;
+}
+
+/* ══════════════════════════════════
+   OPTION A — CLEAN WHITE / EDITORIAL
+   White bg, bold orange accents, minimal
+══════════════════════════════════ */
+.opt-a {
+  background: #FFFFFF;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  padding: 28px 32px 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.opt-a .top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.opt-a .logo {
+  font-size: 9px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;
+  color: #111;
+}
+.opt-a .logo span { color: #F07320; }
+.opt-a .badge {
+  font-size: 7px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: #F07320; background: #FEF0E6; border: 1px solid #FDD5B0;
+  border-radius: 3px; padding: 3px 8px;
+}
+.opt-a .slide-num { font-size: 9px; color: #BBB; font-weight: 500; }
+.opt-a h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px; font-weight: 800; line-height: 0.9; text-transform: uppercase;
+  color: #111; margin-bottom: 12px; letter-spacing: -0.5px;
+}
+.opt-a h1 span { color: #F07320; }
+.opt-a .subtitle {
+  font-size: 11px; color: #666; line-height: 1.55; max-width: 60%;
+  font-weight: 400;
+}
+.opt-a .divider {
+  width: 40px; height: 3px; background: #F07320; border-radius: 2px; margin: 10px 0;
+}
+.opt-a .meta {
+  margin-top: auto; display: flex; gap: 16px;
+}
+.opt-a .meta-item { font-size: 8px; color: #999; }
+.opt-a .meta-item strong { display: block; font-size: 9px; color: #222; margin-bottom: 1px; }
+.opt-a .meta-sep { width: 1px; background: #EEE; align-self: stretch; }
+.opt-a .deco {
+  position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+  width: 200px; height: 200px;
+  background: linear-gradient(135deg, #FEF0E6 0%, #FFF5ED 100%);
+  border-radius: 50%;
+  border: 2px solid #FDD5B0;
+}
+.opt-a .deco::after {
+  content: '';
+  position: absolute; inset: 24px;
+  border-radius: 50%;
+  border: 1px solid #FDD5B0;
+}
+.opt-a .pain-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1;
+}
+.opt-a .pain-card {
+  background: #FAFAFA; border: 1px solid #EEE; border-radius: 6px;
+  padding: 12px 14px; position: relative; overflow: hidden;
+}
+.opt-a .pain-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: #F07320;
+}
+.opt-a .pain-title { font-size: 11px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.opt-a .pain-body { font-size: 9px; color: #777; line-height: 1.5; }
+.opt-a .pain-impact { margin-top: 6px; font-size: 8px; font-weight: 700; color: #F07320; letter-spacing: 0.5px; text-transform: uppercase; }
+.opt-a .pain-num {
+  position: absolute; top: 8px; right: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 800; color: rgba(240,115,32,0.08); line-height: 1;
+}
+.opt-a .stat {
+  margin-top: 10px; background: #FEF0E6; border: 1px solid #FDD5B0; border-radius: 6px;
+  padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.opt-a .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: #F07320; }
+.opt-a .stat-txt { font-size: 9px; color: #666; }
+
+
+/* ══════════════════════════════════
+   OPTION B — WARM CREAM / PREMIUM
+   Cream bg, navy text, orange+gold
+══════════════════════════════════ */
+.opt-b {
+  background: #F5F0E8;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  padding: 28px 32px 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.opt-b .top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.opt-b .logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #1A1A3E;
+}
+.opt-b .logo span { color: #F07320; }
+.opt-b .badge {
+  font-size: 7px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: #1A1A3E; background: rgba(26,26,62,0.08); border: 1px solid rgba(26,26,62,0.15);
+  border-radius: 3px; padding: 3px 8px;
+}
+.opt-b .slide-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11px; color: #999; font-style: italic;
+}
+.opt-b h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px; font-weight: 400; line-height: 1.05;
+  color: #1A1A3E; margin-bottom: 10px;
+}
+.opt-b h1 em { color: #F07320; font-style: italic; }
+.opt-b .subtitle { font-size: 11px; color: #5A5A7A; line-height: 1.6; max-width: 62%; font-weight: 400; }
+.opt-b .divider { width: 40px; height: 2px; background: #E8B84B; border-radius: 2px; margin: 10px 0; }
+.opt-b .meta { margin-top: auto; display: flex; gap: 16px; }
+.opt-b .meta-item { font-size: 8px; color: #888; }
+.opt-b .meta-item strong { display: block; font-size: 9px; color: #1A1A3E; margin-bottom: 1px; }
+.opt-b .meta-sep { width: 1px; background: rgba(0,0,0,0.1); align-self: stretch; }
+.opt-b .deco {
+  position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  width: 200px; height: 200px;
+}
+.opt-b .deco-circle {
+  width: 160px; height: 160px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(240,115,32,0.12) 0%, rgba(232,184,75,0.1) 100%);
+  border: 1px solid rgba(240,115,32,0.2);
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+.opt-b .deco-ring {
+  width: 200px; height: 200px; border-radius: 50%;
+  border: 1px solid rgba(26,26,62,0.08);
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+
+.opt-b .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+.opt-b .pain-card {
+  background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.07); border-radius: 6px;
+  padding: 12px 14px; position: relative; overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.opt-b .pain-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, #F07320, #E8B84B);
+}
+.opt-b .pain-title { font-family: 'DM Serif Display', serif; font-size: 13px; color: #1A1A3E; margin-bottom: 4px; }
+.opt-b .pain-body { font-size: 9px; color: #666; line-height: 1.55; }
+.opt-b .pain-impact { margin-top: 6px; font-size: 8px; font-weight: 700; color: #F07320; letter-spacing: 0.5px; text-transform: uppercase; }
+.opt-b .pain-num {
+  position: absolute; top: 6px; right: 10px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px; color: rgba(26,26,62,0.06); line-height: 1;
+}
+.opt-b .stat {
+  margin-top: 10px; background: rgba(255,255,255,0.7); border: 1px solid rgba(240,115,32,0.2); border-radius: 6px;
+  padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.opt-b .stat-num { font-family: 'DM Serif Display', serif; font-size: 26px; color: #F07320; }
+.opt-b .stat-txt { font-size: 9px; color: #666; }
+
+
+/* ══════════════════════════════════
+   OPTION C — LIGHT GRAY / MODERN SaaS
+   Gray bg, strong orange header strip, clean cards
+══════════════════════════════════ */
+.opt-c {
+  background: #F4F5F7;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.opt-c .header-strip {
+  background: #1C1E3A;
+  padding: 12px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.opt-c .logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: #FFF;
+}
+.opt-c .logo span { color: #F07320; }
+.opt-c .badge {
+  font-size: 7px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: #F07320; border: 1px solid rgba(240,115,32,0.4); border-radius: 3px; padding: 3px 8px;
+}
+.opt-c .slide-num { font-size: 9px; color: rgba(255,255,255,0.4); font-weight: 500; }
+.opt-c .body { flex: 1; padding: 20px 28px 16px; display: flex; flex-direction: column; }
+.opt-c h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 38px; font-weight: 800; line-height: 0.95; text-transform: uppercase;
+  color: #1C1E3A; margin-bottom: 4px; letter-spacing: -0.5px;
+}
+.opt-c h1 span { color: #F07320; }
+.opt-c .rule { width: 36px; height: 3px; background: #F07320; border-radius: 2px; margin: 8px 0 12px; }
+.opt-c .subtitle { font-size: 11px; color: #555; line-height: 1.55; max-width: 60%; font-weight: 400; }
+.opt-c .meta { margin-top: auto; display: flex; gap: 0; border: 1px solid #E0E2E8; border-radius: 6px; overflow: hidden; background: #FFF; }
+.opt-c .meta-item { flex: 1; padding: 6px 10px; border-right: 1px solid #E0E2E8; }
+.opt-c .meta-item:last-child { border-right: none; }
+.opt-c .meta-label { font-size: 7px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #AAA; }
+.opt-c .meta-value { font-size: 9px; font-weight: 600; color: #1C1E3A; margin-top: 1px; }
+
+.opt-c .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+.opt-c .pain-card {
+  background: #FFF; border: 1px solid #E0E2E8; border-radius: 6px;
+  padding: 12px 14px; position: relative; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.opt-c .pain-left-bar {
+  position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: #F07320;
+}
+.opt-c .pain-title { font-size: 11px; font-weight: 700; color: #1C1E3A; margin-bottom: 4px; }
+.opt-c .pain-body { font-size: 9px; color: #666; line-height: 1.5; }
+.opt-c .pain-impact {
+  margin-top: 6px; display: inline-block;
+  font-size: 7px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  color: #F07320; background: #FEF0E6; border-radius: 2px; padding: 2px 6px;
+}
+.opt-c .pain-num {
+  position: absolute; top: 6px; right: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px; font-weight: 800; color: rgba(28,30,58,0.05); line-height: 1;
+}
+.opt-c .stat {
+  margin-top: 8px; background: #1C1E3A; border-radius: 6px;
+  padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.opt-c .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 800; color: #F07320; }
+.opt-c .stat-txt { font-size: 9px; color: rgba(255,255,255,0.7); }
+
+/* ══ SHARED PREVIEW WRAPPER ══ */
+.preview-inner {
+  width: 100%; height: 100%; position: relative;
+  display: flex; flex-direction: column;
+}
+</style>
+</head>
+<body>
+
+<div class="page-title">Design Options — Select a light theme for the playCONNECT PM Deck</div>
+
+<div class="options">
+
+  <!-- ══ OPTION A ══ -->
+  <div class="option-wrap">
+    <div class="option-label">Option A · Clean White · Editorial</div>
+    <div class="preview">
+      <div class="preview-inner opt-a">
+        <div class="top-bar">
+          <div>
+            <div class="logo">play<span>CONNECT</span></div>
+            <div class="badge">PM Home Assignment</div>
+          </div>
+          <div class="slide-num">01 / 12</div>
+        </div>
+        <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+          <div style="font-size:8px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#F07320; margin-bottom:8px;">Product Strategy · Design · Execution</div>
+          <div class="opt-a" style="padding:0; background:transparent; flex:1; display:flex; flex-direction:column;">
+            <h1>Cross-Game<br><span>Promotion</span><br>System</h1>
+            <div class="divider"></div>
+            <div class="subtitle">A unified, self-service campaign engine that connects player actions across the multi-game portfolio — eliminating engineering bottlenecks and unlocking marketing velocity.</div>
+            <div class="meta" style="margin-top:auto;">
+              <div class="meta-item"><strong>Platform</strong>playCONNECT</div>
+              <div class="meta-sep"></div>
+              <div class="meta-item"><strong>Scope</strong>SDK · AVA · playOps</div>
+              <div class="meta-sep"></div>
+              <div class="meta-item"><strong>Portfolio</strong>MyVegas · POP! · MGM</div>
+              <div class="meta-sep"></div>
+              <div class="meta-item"><strong>Horizon</strong>3–6 Months</div>
+            </div>
+          </div>
+          <div class="deco"></div>
+        </div>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="preview-inner opt-a" style="padding:20px 24px 16px;">
+        <div style="font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#AAA; margin-bottom:4px;">Problem Framing</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; text-transform:uppercase; color:#111; margin-bottom:10px;">The <span style="color:#F07320;">Problem</span></div>
+        <div class="pain-grid">
+          <div class="pain-card"><div class="pain-num">01</div><div class="pain-title">Siloed Game Pipelines</div><div class="pain-body">MyVegas, POP!, MGM and Konami each maintain independent data pipelines. No shared player identity.</div><div class="pain-impact">Impact → Zero portfolio-level insight</div></div>
+          <div class="pain-card"><div class="pain-num">02</div><div class="pain-title">Engineering-Gated Campaigns</div><div class="pain-body">Every cross-game campaign requires manual config handoffs and direct engineering intervention.</div><div class="pain-impact">Impact → Eng capacity wasted on ops</div></div>
+          <div class="pain-card"><div class="pain-num">03</div><div class="pain-title">Slow Time-to-Market</div><div class="pain-body">A single cross-game promotion takes 2–3 weeks to launch. Competitors ship in hours.</div><div class="pain-impact">Impact → Lost revenue at peak windows</div></div>
+          <div class="pain-card"><div class="pain-num">04</div><div class="pain-title">No Campaign Visibility</div><div class="pain-body">No unified view of campaign trigger rates, reward redemptions, or cross-game retention impact.</div><div class="pain-impact">Impact → No feedback loop to optimise</div></div>
+        </div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-txt">of cross-game campaigns currently require engineering intervention — <strong>zero can be launched by Marketing independently</strong></div></div>
+      </div>
+    </div>
+    <div style="background:#fff; border:1px solid #E0E2E8; border-radius:8px; padding:12px 16px; font-size:11px; color:#555; line-height:1.6;">
+      <strong style="color:#111; display:block; margin-bottom:4px;">A · Clean White</strong>
+      Pure white background · Orange + black type · Barlow Condensed headers · Minimal editorial feel · High contrast
+    </div>
+  </div>
+
+  <!-- ══ OPTION B ══ -->
+  <div class="option-wrap">
+    <div class="option-label">Option B · Warm Cream · Premium</div>
+    <div class="preview">
+      <div class="preview-inner opt-b">
+        <div class="top-bar">
+          <div>
+            <div class="logo">play<span>CONNECT</span></div>
+          </div>
+          <div class="badge">PM Home Assignment</div>
+          <div class="slide-num">01 / 12</div>
+        </div>
+        <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+          <h1>Cross-Game<br><em>Promotion</em><br>System</h1>
+          <div class="divider"></div>
+          <div class="subtitle">A unified, self-service campaign engine that connects player actions across the multi-game portfolio — eliminating engineering bottlenecks and unlocking marketing velocity.</div>
+          <div class="meta" style="margin-top:auto;">
+            <div class="meta-item"><strong>Platform</strong>playCONNECT</div>
+            <div class="meta-sep"></div>
+            <div class="meta-item"><strong>Scope</strong>SDK · AVA · playOps</div>
+            <div class="meta-sep"></div>
+            <div class="meta-item"><strong>Portfolio</strong>MyVegas · POP! · MGM</div>
+            <div class="meta-sep"></div>
+            <div class="meta-item"><strong>Horizon</strong>3–6 Months</div>
+          </div>
+          <div class="deco"><div class="deco-ring"></div><div class="deco-circle"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="preview-inner opt-b" style="padding:20px 24px 16px;">
+        <div style="font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#AAA; margin-bottom:4px;">Problem Framing</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:28px; color:#1A1A3E; margin-bottom:10px;">The <em style="color:#F07320;">Problem</em></div>
+        <div class="pain-grid">
+          <div class="pain-card"><div class="pain-num">01</div><div class="pain-title">Siloed Game Pipelines</div><div class="pain-body">MyVegas, POP!, MGM and Konami each maintain independent data pipelines. No shared player identity.</div><div class="pain-impact">Impact → Zero portfolio-level insight</div></div>
+          <div class="pain-card"><div class="pain-num">02</div><div class="pain-title">Engineering-Gated Campaigns</div><div class="pain-body">Every cross-game campaign requires manual config handoffs and direct engineering intervention.</div><div class="pain-impact">Impact → Eng capacity wasted on ops</div></div>
+          <div class="pain-card"><div class="pain-num">03</div><div class="pain-title">Slow Time-to-Market</div><div class="pain-body">A single cross-game promotion takes 2–3 weeks to launch. Competitors ship in hours.</div><div class="pain-impact">Impact → Lost revenue at peak windows</div></div>
+          <div class="pain-card"><div class="pain-num">04</div><div class="pain-title">No Campaign Visibility</div><div class="pain-body">No unified view of campaign trigger rates, reward redemptions, or cross-game retention impact.</div><div class="pain-impact">Impact → No feedback loop to optimise</div></div>
+        </div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-txt">of cross-game campaigns currently require engineering intervention — <strong>zero can be launched by Marketing independently</strong></div></div>
+      </div>
+    </div>
+    <div style="background:#fff; border:1px solid #E0E2E8; border-radius:8px; padding:12px 16px; font-size:11px; color:#555; line-height:1.6;">
+      <strong style="color:#111; display:block; margin-bottom:4px;">B · Warm Cream</strong>
+      Warm off-white (#F5F0E8) · Navy deep text · DM Serif Display headers · Gold + orange accents · Premium / editorial feel
+    </div>
+  </div>
+
+  <!-- ══ OPTION C ══ -->
+  <div class="option-wrap">
+    <div class="option-label">Option C · Light Gray · Modern SaaS</div>
+    <div class="preview">
+      <div class="preview-inner opt-c">
+        <div class="header-strip">
+          <div class="logo">play<span>CONNECT</span></div>
+          <div class="badge">PM Home Assignment</div>
+          <div class="slide-num">01 / 12</div>
+        </div>
+        <div class="body">
+          <div style="font-size:8px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#F07320; margin-bottom:8px;">Product Strategy · Design · Execution</div>
+          <h1>Cross-Game<br><span>Promotion</span><br>System</h1>
+          <div class="rule"></div>
+          <div class="subtitle">A unified, self-service campaign engine that connects player actions across the multi-game portfolio — eliminating engineering bottlenecks and unlocking marketing velocity.</div>
+          <div class="meta" style="margin-top:auto;">
+            <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">playCONNECT</div></div>
+            <div class="meta-item"><div class="meta-label">Scope</div><div class="meta-value">SDK · AVA · playOps</div></div>
+            <div class="meta-item"><div class="meta-label">Portfolio</div><div class="meta-value">MyVegas · POP! · MGM</div></div>
+            <div class="meta-item"><div class="meta-label">Horizon</div><div class="meta-value">3–6 Months</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="preview">
+      <div class="preview-inner opt-c">
+        <div class="header-strip" style="padding:8px 28px;">
+          <div style="font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#F07320;">Problem Framing</div>
+          <div style="font-size:8px; color:rgba(255,255,255,0.4);">02 / 12</div>
+        </div>
+        <div class="body" style="padding:16px 24px 12px;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; text-transform:uppercase; color:#1C1E3A; margin-bottom:2px;">The <span style="color:#F07320;">Problem</span></div>
+          <div class="rule"></div>
+          <div class="pain-grid">
+            <div class="pain-card"><div class="pain-left-bar"></div><div class="pain-num">01</div><div class="pain-title">Siloed Game Pipelines</div><div class="pain-body">MyVegas, POP!, MGM and Konami each maintain independent data pipelines. No shared player identity.</div><div class="pain-impact">Zero portfolio-level insight</div></div>
+            <div class="pain-card"><div class="pain-left-bar"></div><div class="pain-num">02</div><div class="pain-title">Engineering-Gated Campaigns</div><div class="pain-body">Every cross-game campaign requires manual config handoffs and direct engineering intervention.</div><div class="pain-impact">Eng capacity wasted on ops</div></div>
+            <div class="pain-card"><div class="pain-left-bar"></div><div class="pain-num">03</div><div class="pain-title">Slow Time-to-Market</div><div class="pain-body">A single cross-game promotion takes 2–3 weeks to launch. Competitors ship in hours.</div><div class="pain-impact">Lost revenue at peak windows</div></div>
+            <div class="pain-card"><div class="pain-left-bar"></div><div class="pain-num">04</div><div class="pain-title">No Campaign Visibility</div><div class="pain-body">No unified view of campaign trigger rates, reward redemptions, or cross-game retention impact.</div><div class="pain-impact">No feedback loop to optimise</div></div>
+          </div>
+          <div class="stat"><div class="stat-num">100%</div><div class="stat-txt">of cross-game campaigns currently require engineering intervention — <strong style="color:#FFF;">zero can be launched by Marketing independently</strong></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff; border:1px solid #E0E2E8; border-radius:8px; padding:12px 16px; font-size:11px; color:#555; line-height:1.6;">
+      <strong style="color:#111; display:block; margin-bottom:4px;">C · Light Gray / Modern SaaS</strong>
+      Gray (#F4F5F7) body · Dark navy header strip · Left-border cards · High contrast stat bar · Clean product/SaaS aesthetic
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

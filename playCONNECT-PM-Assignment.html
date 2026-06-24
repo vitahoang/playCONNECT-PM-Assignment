@@ -1,0 +1,2931 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cross-Game Promotion System — playCONNECT</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --bg-card: #fafafa;
+        --bg-card2: #f4f5f7;
+        --accent: #f07320;
+        --accent2: #ffab5e;
+        --gold: #d4a017;
+        --navy: #111827;
+        --text: #111827;
+        --muted: #6b7280;
+        --muted2: #9ca3af;
+        --border: #e5e7eb;
+        --border2: rgba(240, 115, 32, 0.25);
+        --glow: #fef0e6;
+        --font-head: "Barlow Condensed", sans-serif;
+        --font-body: "Plus Jakarta Sans", sans-serif;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background: #ebebeb;
+        color: var(--text);
+        font-family: var(--font-body);
+        overflow: hidden;
+      }
+
+      /* ── SLIDE ENGINE ── */
+      #deck {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+        padding: 44px 60px 76px;
+        opacity: 0;
+        transform: translateX(56px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: all;
+      }
+      .slide.prev {
+        opacity: 0;
+        transform: translateX(-56px);
+      }
+
+      /* top orange line on every slide */
+      .slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      /* ── SLIDE HEADER ── */
+      .slide-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-shrink: 0;
+      }
+      .slide-label {
+        font-family: var(--font-head);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent);
+        padding: 4px 12px;
+        border: 1px solid var(--border2);
+        border-radius: 3px;
+        background: var(--glow);
+      }
+      .slide-num {
+        font-family: var(--font-head);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--muted2);
+      }
+
+      /* ── TYPOGRAPHY ── */
+      h1 {
+        font-family: var(--font-head);
+        font-size: clamp(52px, 7.5vw, 92px);
+        font-weight: 800;
+        line-height: 0.92;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+      h1 .accent {
+        color: var(--accent);
+      }
+      h2 {
+        font-family: var(--font-head);
+        font-size: clamp(30px, 4vw, 48px);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+      h2 .accent {
+        color: var(--accent);
+      }
+      h3 {
+        font-family: var(--font-head);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--muted);
+      }
+      strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      code {
+        font-family: "SF Mono", "Fira Code", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        background: var(--glow);
+        border-radius: 3px;
+        padding: 1px 5px;
+      }
+
+      /* ── UTILITIES ── */
+      .rule {
+        width: 44px;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 2px;
+        margin: 12px 0;
+      }
+      .rule-full {
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+        margin: 16px 0;
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 3px;
+        padding: 3px 9px;
+      }
+      .tag-dark {
+        display: inline-block;
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #fff;
+        background: var(--navy);
+        border-radius: 3px;
+        padding: 3px 9px;
+      }
+      .tag-gold {
+        display: inline-block;
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: rgba(212, 160, 23, 0.08);
+        border: 1px solid rgba(212, 160, 23, 0.25);
+        border-radius: 3px;
+        padding: 3px 9px;
+      }
+      .tag-gray {
+        display: inline-block;
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: var(--bg-card2);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        padding: 3px 9px;
+      }
+
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 18px 20px;
+      }
+      .card-accent {
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 8px;
+        padding: 18px 20px;
+      }
+      .card-dark {
+        background: var(--navy);
+        border-radius: 8px;
+        padding: 18px 20px;
+      }
+
+      /* ── NAV ── */
+      #nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.96);
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+      }
+      .nav-btn {
+        background: var(--bg-card2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .nav-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--glow);
+      }
+      .dots {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d1d5db;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .dot.active {
+        background: var(--accent);
+        width: 18px;
+        border-radius: 3px;
+      }
+      .counter {
+        font-family: var(--font-head);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--muted2);
+        min-width: 44px;
+        text-align: center;
+      }
+
+      /* ═══════════════════════════════
+   SLIDE-SPECIFIC
+═══════════════════════════════ */
+
+      /* SLIDE 1 */
+      .s1-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+      .s1-eyebrow {
+        font-family: var(--font-head);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+      }
+      .s1-subtitle {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 580px;
+        margin-top: 18px;
+        line-height: 1.6;
+        font-weight: 400;
+      }
+      .s1-meta {
+        margin-top: 48px;
+        display: flex;
+        gap: 0;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        align-self: flex-start;
+      }
+      .s1-meta-item {
+        padding: 10px 20px;
+        border-right: 1px solid var(--border);
+      }
+      .s1-meta-item:last-child {
+        border-right: none;
+      }
+      .s1-meta-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--muted2);
+      }
+      .s1-meta-value {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        margin-top: 2px;
+      }
+      .playconnect-logo {
+        font-family: var(--font-head);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .playconnect-logo span {
+        color: var(--accent);
+      }
+      .s1-deco {
+        position: absolute;
+        right: -40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .s1-ring {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border2);
+        pointer-events: none;
+      }
+      .s1-ring2 {
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border: 1px solid rgba(240, 115, 32, 0.12);
+        pointer-events: none;
+      }
+
+      /* SLIDE 2 */
+      .pain-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 12px;
+        flex: 1;
+        min-height: 0;
+      }
+      .pain-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+      .pain-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent);
+      }
+      .pain-num {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        font-family: var(--font-head);
+        font-size: 52px;
+        font-weight: 800;
+        color: rgba(240, 115, 32, 0.07);
+        line-height: 1;
+      }
+      .pain-title {
+        font-family: var(--font-head);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .pain-body {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .pain-impact {
+        margin-top: auto;
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .s2-stat {
+        margin-top: 12px;
+        flex-shrink: 0;
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 8px;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .s2-stat-num {
+        font-family: var(--font-head);
+        font-size: 40px;
+        font-weight: 800;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+      .s2-stat-label {
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      /* SLIDE 3 */
+      .sh-layout {
+        display: flex;
+        gap: 20px;
+        flex: 1;
+        min-height: 0;
+      }
+      .sh-matrix {
+        flex: 1.6;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .sh-discovery {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .sh-row {
+        display: grid;
+        grid-template-columns: 2fr 80px 80px 2.5fr;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+      .sh-row.header {
+        background: transparent;
+        border-color: transparent;
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+        padding-bottom: 2px;
+      }
+      .sh-name {
+        font-weight: 700;
+        color: var(--text);
+        font-size: 14px;
+      }
+      .sh-sub {
+        font-size: 11px;
+        color: var(--muted2);
+        font-weight: 400;
+      }
+      .sh-role {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .sh-badge {
+        text-align: center;
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-radius: 3px;
+        padding: 3px 6px;
+      }
+      .hi {
+        color: var(--accent);
+        background: var(--glow);
+        border: 1px solid var(--border2);
+      }
+      .med {
+        color: var(--gold);
+        background: rgba(212, 160, 23, 0.08);
+        border: 1px solid rgba(212, 160, 23, 0.25);
+      }
+      .lo {
+        color: var(--muted);
+        background: var(--bg-card2);
+        border: 1px solid var(--border);
+      }
+      .disc-week {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        flex: 1;
+      }
+      .disc-wk {
+        font-family: var(--font-head);
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--accent);
+        white-space: nowrap;
+        min-width: 30px;
+      }
+      .disc-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .disc-body {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+        line-height: 1.45;
+      }
+
+      /* SLIDE 4 */
+      .comp-grid5 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: auto;
+        align-items: start;
+        gap: 10px;
+        flex: 0 0 auto;
+      }
+      .comp-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+        min-height: 0;
+      }
+      .comp-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--accent);
+      }
+      .comp-card-wide {
+        grid-column: span 2;
+      }
+      .comp-header {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .comp-name {
+        font-family: var(--font-head);
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .comp-sep {
+        color: var(--muted2);
+        font-family: var(--font-head);
+        font-size: 17px;
+        font-weight: 400;
+      }
+      .comp-type {
+        font-family: var(--font-head);
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .comp-section {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .comp-section-label {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+      }
+      .comp-section-label.assumption {
+        color: var(--gold);
+      }
+      .comp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .comp-list-item {
+        display: flex;
+        gap: 7px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .comp-list-item.util::before {
+        content: "→";
+        color: var(--accent);
+        font-weight: 700;
+        flex-shrink: 0;
+        font-size: 11px;
+        margin-top: 1px;
+      }
+      .comp-list-item.assume::before {
+        content: "?";
+        color: var(--gold);
+        font-weight: 700;
+        flex-shrink: 0;
+        font-size: 12px;
+      }
+      .comp-new-banner {
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 8px;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        margin-top: 8px;
+      }
+      .comp-new-label {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+        border-radius: 3px;
+        padding: 2px 8px;
+        flex-shrink: 0;
+      }
+      .comp-new-title {
+        font-family: var(--font-head);
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .comp-new-sep {
+        color: var(--muted2);
+        font-family: var(--font-head);
+        font-size: 16px;
+      }
+      .comp-new-type {
+        font-family: var(--font-head);
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .comp-new-body {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      /* SLIDE 5 */
+      .arch-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+      }
+      .arch-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      .arch-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 7px 14px;
+        font-family: var(--font-head);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+        white-space: nowrap;
+        text-align: center;
+        min-width: 88px;
+      }
+      .arch-box.game {
+        background: var(--bg-card2);
+        border-color: var(--border);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .arch-box.bus {
+        background: var(--glow);
+        border-color: var(--border2);
+        color: var(--accent);
+      }
+      .arch-box.engine {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        font-size: 14px;
+        padding: 9px 20px;
+      }
+      .arch-box.ava,
+      .arch-box.ops {
+        background: rgba(212, 160, 23, 0.08);
+        border-color: rgba(212, 160, 23, 0.3);
+        color: var(--gold);
+      }
+      .arch-box.coupon,
+      .arch-box.robin {
+        background: rgba(16, 185, 129, 0.07);
+        border-color: rgba(16, 185, 129, 0.25);
+        color: #059669;
+      }
+      .arch-box.ledger {
+        background: rgba(99, 102, 241, 0.07);
+        border-color: rgba(99, 102, 241, 0.2);
+        color: #6366f1;
+      }
+      .arch-box.bi {
+        background: var(--bg-card2);
+        border-color: var(--border);
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .arch-label {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+        margin: 2px 0;
+        text-align: center;
+      }
+      .arch-new-badge {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--accent);
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 3px;
+        padding: 2px 7px;
+        align-self: flex-start;
+        margin-bottom: 4px;
+      }
+      .arch-assumptions {
+        margin-top: 14px;
+        background: var(--bg-card2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 16px;
+        width: 100%;
+        max-width: 760px;
+      }
+      .arch-assumptions-title {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+        margin-bottom: 6px;
+      }
+      .arch-assumptions-items {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .arch-ass-item {
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        gap: 5px;
+      }
+      .arch-ass-item::before {
+        content: "*";
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* SLIDE 6 */
+      .flow-layout {
+        display: flex;
+        gap: 18px;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .flow-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .flow-col-title {
+        font-family: var(--font-head);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 2px;
+      }
+      .flow-step {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .flow-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--glow);
+        border: 1.5px solid var(--border2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-head);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+      .flow-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .flow-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .flow-body {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .flow-connector {
+        width: 1px;
+        height: 12px;
+        background: var(--border2);
+        margin-left: 11px;
+      }
+
+      /* SLIDES 7 & 8 */
+      .epics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 12px;
+        flex: 1;
+        min-height: 0;
+      }
+      .epic-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+      .epic-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--accent);
+      }
+      .epic-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-left: 10px;
+      }
+      .epic-num {
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--muted2);
+        letter-spacing: 1px;
+      }
+      .epic-title {
+        font-family: var(--font-head);
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text);
+        padding-left: 10px;
+      }
+      .epic-goal {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+        padding-left: 10px;
+      }
+      .epic-ac-title {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding-left: 10px;
+      }
+      .epic-ac {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-left: 10px;
+      }
+      .epic-ac-item {
+        display: flex;
+        gap: 7px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .epic-ac-item::before {
+        content: "✓";
+        color: var(--accent);
+        font-size: 10px;
+        margin-top: 2px;
+        flex-shrink: 0;
+        font-weight: 700;
+      }
+
+      /* SLIDE 9 */
+      .roadmap-phases {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 14px;
+        flex: 1;
+        min-height: 0;
+      }
+      .roadmap-phase {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+      .roadmap-phase::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+      }
+      .phase-1::before {
+        background: var(--accent);
+      }
+      .phase-2::before {
+        background: var(--gold);
+      }
+      .phase-3::before {
+        background: #10b981;
+      }
+      .phase-label {
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .phase-1 .phase-label {
+        color: var(--accent);
+      }
+      .phase-2 .phase-label {
+        color: var(--gold);
+      }
+      .phase-3 .phase-label {
+        color: #10b981;
+      }
+      .phase-period {
+        font-family: var(--font-head);
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1;
+      }
+      .phase-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .phase-items {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+      }
+      .phase-item {
+        display: flex;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .phase-item::before {
+        content: "→";
+        color: var(--muted2);
+        font-size: 11px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .phase-milestone {
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      /* SLIDE 10 */
+      .metrics-layout {
+        display: flex;
+        gap: 20px;
+        flex: 1;
+        min-height: 0;
+      }
+      .metrics-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .metrics-col-header {
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+        border-bottom: 2px solid;
+      }
+      .metrics-col-header.biz {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .metrics-col-header.plat {
+        color: #6366f1;
+        border-color: #6366f1;
+      }
+      .metric-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+      .metric-name {
+        font-family: var(--font-head);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .metric-target {
+        font-family: var(--font-head);
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .metric-target.orange {
+        color: var(--accent);
+      }
+      .metric-target.gold {
+        color: var(--gold);
+      }
+      .metric-target.green {
+        color: #10b981;
+      }
+      .metric-target.purple {
+        color: #6366f1;
+      }
+      .metric-baseline {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .metric-how {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.55;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+      .metric-how strong {
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      /* SLIDE 11 */
+      .rollout-table {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+      .rollout-row {
+        display: grid;
+        grid-template-columns: 140px 1fr 1fr 1fr;
+      }
+      .rollout-row.header {
+        background: var(--navy);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .rollout-cell {
+        padding: 12px 14px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+        border-right: 1px solid var(--border);
+      }
+      .rollout-cell:last-child {
+        border-right: none;
+      }
+      .rollout-row.header .rollout-cell {
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        border-right-color: rgba(255, 255, 255, 0.06);
+      }
+      .rollout-row:not(.header) {
+        border-bottom: 1px solid var(--border);
+      }
+      .rollout-row:not(.header):last-child {
+        border-bottom: none;
+      }
+      .rollout-row:not(.header):nth-child(even) {
+        background: var(--bg-card);
+      }
+      .rollout-sh {
+        font-family: var(--font-head);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .rollout-sh-sub {
+        font-size: 11px;
+        color: var(--muted2);
+        font-weight: 400;
+        font-family: var(--font-body);
+      }
+      .rollout-cell strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .deliverables {
+        margin-top: 10px;
+        flex-shrink: 0;
+        background: var(--glow);
+        border: 1px solid var(--border2);
+        border-radius: 6px;
+        padding: 10px 16px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .del-title {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        width: 100%;
+        margin-bottom: 4px;
+      }
+      .del-item {
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .del-item::before {
+        content: "□";
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      /* SLIDE 12 */
+      .risks-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+        min-height: 0;
+      }
+      .risk-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px 20px;
+        display: grid;
+        grid-template-columns: 1fr 1.1fr 2fr;
+        gap: 16px;
+        align-items: start;
+        flex: 1;
+      }
+      .risk-name {
+        font-family: var(--font-head);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+        margin: 6px 0 4px;
+      }
+      .risk-badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .risk-badge {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-radius: 3px;
+        padding: 2px 7px;
+      }
+      .risk-high {
+        color: #dc2626;
+        background: rgba(220, 38, 38, 0.08);
+        border: 1px solid rgba(220, 38, 38, 0.2);
+      }
+      .risk-med {
+        color: var(--gold);
+        background: rgba(212, 160, 23, 0.08);
+        border: 1px solid rgba(212, 160, 23, 0.25);
+      }
+      .risk-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .risk-mit-title {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .risk-mit-items {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .risk-mit-item {
+        display: flex;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .risk-mit-item::before {
+        content: "→";
+        color: var(--accent);
+        flex-shrink: 0;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="deck">
+      <!-- ══ SLIDE 1 ══ -->
+      <div class="slide active" id="s1">
+        <div class="slide-header">
+          <div>
+            <div class="playconnect-logo">play<span>CONNECT</span></div>
+            <div class="slide-label" style="margin-top: 6px">
+              PM Home Assignment
+            </div>
+          </div>
+          <div class="slide-num">01 / 12</div>
+        </div>
+        <div class="s1-body">
+          <div class="s1-eyebrow">Product Strategy · Design · Execution</div>
+          <h1>
+            Cross-Game<br /><span class="accent">Promotion</span><br />System
+          </h1>
+          <div class="rule"></div>
+          <p class="s1-subtitle">
+            A unified, self-service campaign engine that connects player actions
+            across the multi-game portfolio — eliminating engineering
+            bottlenecks and unlocking marketing velocity.
+          </p>
+          <div class="s1-meta">
+            <div class="s1-meta-item">
+              <div class="s1-meta-label">Platform</div>
+              <div class="s1-meta-value">playCONNECT</div>
+            </div>
+            <div class="s1-meta-item">
+              <div class="s1-meta-label">Scope</div>
+              <div class="s1-meta-value">
+                SDK · AVA · playOps · Coupon · Robinhood
+              </div>
+            </div>
+            <div class="s1-meta-item">
+              <div class="s1-meta-label">Portfolio</div>
+              <div class="s1-meta-value">MyVegas · POP! · MGM · Konami</div>
+            </div>
+            <div class="s1-meta-item">
+              <div class="s1-meta-label">Horizon</div>
+              <div class="s1-meta-value">3–6 Months</div>
+            </div>
+          </div>
+          <div class="s1-deco"></div>
+          <div class="s1-ring"></div>
+          <div class="s1-ring2"></div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 2 ══ -->
+      <div class="slide" id="s2">
+        <div class="slide-header">
+          <div class="slide-label">Problem Framing</div>
+          <div class="slide-num">02 / 12</div>
+        </div>
+        <h2>The <span class="accent">Problem</span></h2>
+        <div class="rule"></div>
+        <div class="pain-grid" style="margin-top: 14px">
+          <div class="pain-card">
+            <div class="pain-num">01</div>
+            <div class="pain-title">Siloed Game Pipelines</div>
+            <div class="pain-body">
+              MyVegas, POP!, MGM and Konami each maintain independent data
+              pipelines and local configs. No shared player identity. No
+              cross-game visibility.
+            </div>
+            <div class="pain-impact">Impact → Zero portfolio-level insight</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-num">02</div>
+            <div class="pain-title">Engineering-Gated Campaigns</div>
+            <div class="pain-body">
+              Every cross-game campaign requires manual config handoffs and
+              direct engineering intervention. Marketing cannot act without
+              developer time.
+            </div>
+            <div class="pain-impact">
+              Impact → Eng capacity wasted on ops work
+            </div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-num">03</div>
+            <div class="pain-title">Slow Time-to-Market</div>
+            <div class="pain-body">
+              A single cross-game promotion takes 2–3 weeks to launch.
+              Competitors ship campaign updates in hours. Opportunities are
+              missed at every live event window.
+            </div>
+            <div class="pain-impact">
+              Impact → Lost revenue during peak windows
+            </div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-num">04</div>
+            <div class="pain-title">No Campaign Visibility</div>
+            <div class="pain-body">
+              Marketing has no unified view of campaign trigger rates, reward
+              redemptions, or cross-game retention impact. Decisions are made
+              without data.
+            </div>
+            <div class="pain-impact">Impact → No feedback loop to optimise</div>
+          </div>
+        </div>
+        <div class="s2-stat">
+          <div class="s2-stat-num">100%</div>
+          <div class="s2-stat-label">
+            of cross-game campaigns currently require engineering intervention —
+            <strong>zero can be launched by Marketing independently</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 3 ══ -->
+      <div class="slide" id="s3">
+        <div class="slide-header">
+          <div class="slide-label">Problem Framing · Discovery</div>
+          <div class="slide-num">03 / 12</div>
+        </div>
+        <h2>Stakeholder <span class="accent">Matrix</span></h2>
+        <div class="rule"></div>
+        <div class="sh-layout" style="margin-top: 12px">
+          <div class="sh-matrix">
+            <div class="sh-row header">
+              <div>Stakeholder</div>
+              <div style="text-align: center">Influence</div>
+              <div style="text-align: center">Interest</div>
+              <div>Role in This Initiative</div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">Marketing Team</div></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div class="sh-role">
+                Primary requester · Campaign designer · Self-service user
+              </div>
+            </div>
+            <div class="sh-row">
+              <div>
+                <div class="sh-name">Game Teams ×4</div>
+                <div class="sh-sub">MyVegas · POP! · MGM · Konami</div>
+              </div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div><span class="sh-badge med">Med</span></div>
+              <div class="sh-role">
+                Event source + reward destination · SDK integration owners
+              </div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">LiveOps / playOps</div></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div class="sh-role">
+                Daily platform operators · Campaign monitoring
+              </div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">Engineering / Platform</div></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div><span class="sh-badge med">Med</span></div>
+              <div class="sh-role">
+                System builders · API owners · Integration leads
+              </div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">BI / Data</div></div>
+              <div><span class="sh-badge med">Med</span></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div class="sh-role">
+                Attribution modelling · Dashboard & reporting
+              </div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">Customer Support</div></div>
+              <div><span class="sh-badge lo">Low</span></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div class="sh-role">
+                Player escalations · Reward issue resolution
+              </div>
+            </div>
+            <div class="sh-row">
+              <div><div class="sh-name">Players</div></div>
+              <div><span class="sh-badge lo">Low</span></div>
+              <div><span class="sh-badge hi">High</span></div>
+              <div class="sh-role">
+                End recipients · Validate engagement & reward value
+              </div>
+            </div>
+          </div>
+          <div class="sh-discovery">
+            <div
+              style="
+                font-family: var(--font-head);
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 4px;
+              "
+            >
+              Discovery Sprint
+            </div>
+            <div class="disc-week">
+              <div class="disc-wk">W1</div>
+              <div>
+                <div class="disc-label">Marketing + Game Teams</div>
+                <div class="disc-body">
+                  Campaign workflows, reward types, trigger event inventory per
+                  game
+                </div>
+              </div>
+            </div>
+            <div class="disc-week">
+              <div class="disc-wk">W2</div>
+              <div>
+                <div class="disc-label">Engineering / Platform</div>
+                <div class="disc-body">
+                  API capabilities, SDK extensibility, data schema constraints
+                </div>
+              </div>
+            </div>
+            <div class="disc-week">
+              <div class="disc-wk">W3</div>
+              <div>
+                <div class="disc-label">BI / Data + LiveOps</div>
+                <div class="disc-body">
+                  Reporting needs, monitoring thresholds, alert requirements
+                </div>
+              </div>
+            </div>
+            <div class="disc-week">
+              <div class="disc-wk">W4</div>
+              <div>
+                <div class="disc-label">Legal / CS</div>
+                <div class="disc-body">
+                  Compliance constraints, promo rules, support escalation paths
+                </div>
+              </div>
+            </div>
+            <div
+              class="disc-week"
+              style="background: var(--glow); border-color: var(--border2)"
+            >
+              <div class="disc-wk" style="color: var(--muted2)">∞</div>
+              <div>
+                <div class="disc-label">Players (indirect)</div>
+                <div class="disc-body">
+                  CS ticket themes, BI retention data, A/B test signals from
+                  past promos
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 4 ══ -->
+      <div class="slide" id="s4">
+        <div class="slide-header">
+          <div class="slide-label">Strategic Insight · Product Alignment</div>
+          <div class="slide-num">04 / 12</div>
+        </div>
+        <h2>Platform <span class="accent">Alignment</span></h2>
+        <div class="rule"></div>
+        <div class="comp-grid5" style="margin-top: 12px">
+          <!-- SDK -->
+          <div class="comp-card">
+            <div class="comp-header"><div class="comp-name">SDK</div></div>
+            <div class="comp-type" style="font-size: 13px">
+              Event Capture Layer
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label">Utilization</div>
+              <div class="comp-list">
+                <div class="comp-list-item util">
+                  Let clients attach campaign metadata to events (level,
+                  purchase, session_start, etc.)
+                </div>
+                <div class="comp-list-item util">
+                  Stream events and their metadata from the game client to the
+                  backend
+                </div>
+                <div class="comp-list-item util">
+                  Secure and verify event data to prevent cheating
+                </div>
+              </div>
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label assumption">
+                Technical Assumptions
+              </div>
+              <div class="comp-list">
+                <div class="comp-list-item assume">
+                  Can new event types be added via config without a full SDK
+                  release?
+                </div>
+                <div class="comp-list-item assume">
+                  Is the SDK backward compatible with existing game
+                  integrations?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AVA -->
+          <div class="comp-card">
+            <div class="comp-header"><div class="comp-name">AVA</div></div>
+            <div class="comp-type" style="font-size: 13px">
+              Player Profiling & Eligibility
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label">Utilization</div>
+              <div class="comp-list">
+                <div class="comp-list-item util">
+                  Evaluate player eligibility by segment, VIP tier, or opt-in
+                  status
+                </div>
+                <div class="comp-list-item util">
+                  Return eligibility decision with reason code per campaign
+                </div>
+                <div class="comp-list-item util">
+                  Support live rule updates without campaign downtime
+                </div>
+              </div>
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label assumption">
+                Technical Assumptions
+              </div>
+              <div class="comp-list">
+                <div class="comp-list-item assume">
+                  Does AVA expose a synchronous eligibility API with &lt;100ms
+                  SLA?
+                </div>
+                <div class="comp-list-item assume">
+                  Can eligibility rules be updated on live campaigns without
+                  restart?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- playOps -->
+          <div class="comp-card">
+            <div class="comp-header"><div class="comp-name">playOps</div></div>
+            <div class="comp-type" style="font-size: 13px">
+              Campaign Management Console
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label">Utilization</div>
+              <div class="comp-list">
+                <div class="comp-list-item util">
+                  Build and publish cross-game campaigns without engineering
+                </div>
+                <div class="comp-list-item util">
+                  Monitor live campaign performance via analytics dashboard
+                </div>
+                <div class="comp-list-item util">
+                  Pause, edit, or cancel campaigns in real-time
+                </div>
+              </div>
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label assumption">
+                Technical Assumptions
+              </div>
+              <div class="comp-list">
+                <div class="comp-list-item assume">
+                  Can a new Campaign Builder module be added without disrupting
+                  the existing console?
+                </div>
+                <div class="comp-list-item assume">
+                  Does playOps support role-based access for Marketing vs.
+                  LiveOps users?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coupon -->
+          <div class="comp-card">
+            <div class="comp-header"><div class="comp-name">Coupon</div></div>
+            <div class="comp-type" style="font-size: 13px">
+              Promo Code Generation
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label">Utilization</div>
+              <div class="comp-list">
+                <div class="comp-list-item util">
+                  Generate unique, player-specific promo codes per campaign
+                  trigger
+                </div>
+                <div class="comp-list-item util">
+                  Enforce per-player redemption limits and code expiry rules
+                </div>
+                <div class="comp-list-item util">
+                  Return generated code to Campaign Engine in real-time
+                </div>
+              </div>
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label assumption">
+                Technical Assumptions
+              </div>
+              <div class="comp-list">
+                <div class="comp-list-item assume">
+                  Does Coupon expose a REST API for programmatic, per-player
+                  code generation?
+                </div>
+                <div class="comp-list-item assume">
+                  Can codes be generated in real-time (not batch mode)?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Robinhood -->
+          <div class="comp-card">
+            <div class="comp-header">
+              <div class="comp-name">Robinhood</div>
+            </div>
+            <div class="comp-type" style="font-size: 13px">
+              Reward Awarding Engine
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label">Utilization</div>
+              <div class="comp-list">
+                <div class="comp-list-item util">
+                  Award chips/rewards to player account in target game
+                </div>
+                <div class="comp-list-item util">
+                  Support cross-game targeting (trigger ≠ reward game)
+                </div>
+                <div class="comp-list-item util">
+                  Retry failed awards up to 3× with exponential backoff
+                </div>
+              </div>
+            </div>
+            <div class="comp-section">
+              <div class="comp-section-label assumption">
+                Technical Assumptions
+              </div>
+              <div class="comp-list">
+                <div class="comp-list-item assume">
+                  Does Robinhood support real-time awarding (not batch)?
+                </div>
+                <div class="comp-list-item assume">
+                  Can it award to a different game than the trigger source?
+                </div>
+                <div class="comp-list-item assume">
+                  Is there an idempotency mechanism to prevent duplicate awards?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-new-banner">
+          <div class="comp-new-label">NEW</div>
+          <div class="comp-new-title">Campaign Engine</div>
+          <div class="comp-new-sep">—</div>
+          <div class="comp-new-type">The Missing Orchestrator</div>
+          <div class="comp-new-body" style="margin-left: 8px">
+            Subscribes to the Event Bus, evaluates active campaign rules, calls
+            AVA for eligibility, triggers Coupon + Robinhood, and logs every
+            action to the Loyalty Ledger. Unifies all 5 existing systems into a
+            single automated flow.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 5 ══ -->
+      <div class="slide" id="s5">
+        <div class="slide-header">
+          <div class="slide-label">Product Design · System Blueprint</div>
+          <div class="slide-num">05 / 12</div>
+        </div>
+        <h2>System <span class="accent">Blueprint</span></h2>
+        <div class="rule"></div>
+        <div class="arch-wrap">
+          <div class="arch-row">
+            <div class="arch-box game">MyVegas</div>
+            <div class="arch-box game">POP! Slots</div>
+            <div class="arch-box game">MGM</div>
+            <div class="arch-box game">Konami</div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: 2px 0;
+            "
+          >
+            <div class="arch-label">SDK · trackEvent(type, payload)</div>
+            <div
+              style="width: 1px; height: 14px; background: var(--border2)"
+            ></div>
+          </div>
+          <div class="arch-row">
+            <div class="arch-box bus">⚡ Event Bus (SQS / Kafka)</div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: 2px 0;
+            "
+          >
+            <div
+              style="width: 1px; height: 14px; background: var(--border2)"
+            ></div>
+          </div>
+          <div class="arch-row" style="gap: 24px; align-items: center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+              "
+            >
+              <div class="arch-new-badge">NEW</div>
+              <div class="arch-box engine">⚙ Campaign Engine</div>
+            </div>
+            <div
+              style="color: var(--border2); font-size: 13px; font-weight: 700"
+            >
+              ◄──────
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+              "
+            >
+              <div
+                style="
+                  font-family: var(--font-head);
+                  font-size: 9px;
+                  font-weight: 700;
+                  letter-spacing: 2px;
+                  text-transform: uppercase;
+                  color: var(--muted2);
+                "
+              >
+                Campaign Rules DB
+              </div>
+              <div class="arch-box ops">🖥 playOps Console</div>
+            </div>
+          </div>
+          <div class="arch-row" style="gap: 80px; margin-top: 6px">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+              "
+            >
+              <div
+                style="
+                  width: 1px;
+                  height: 14px;
+                  background: rgba(212, 160, 23, 0.4);
+                "
+              ></div>
+              <div class="arch-box ava">🧠 AVA (Eligibility)</div>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+              "
+            >
+              <div
+                style="
+                  width: 1px;
+                  height: 14px;
+                  background: rgba(16, 185, 129, 0.4);
+                "
+              ></div>
+              <div class="arch-row" style="gap: 8px">
+                <div class="arch-box coupon">🎟 Coupon</div>
+                <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
+                  ──►
+                </div>
+                <div class="arch-box robin">🏹 Robinhood</div>
+                <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
+                  ──►
+                </div>
+                <div class="arch-box coupon" style="font-size: 11px">
+                  👤 Player Account
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: 2px 0;
+            "
+          >
+            <div
+              style="
+                width: 1px;
+                height: 14px;
+                background: rgba(99, 102, 241, 0.4);
+              "
+            ></div>
+          </div>
+          <div class="arch-row" style="gap: 10px">
+            <div class="arch-box ledger">📒 Loyalty Ledger</div>
+            <div style="color: rgba(99, 102, 241, 0.5); font-weight: 700">
+              ──►
+            </div>
+            <div class="arch-box bi">📊 BI / Analytics</div>
+          </div>
+          <div class="arch-assumptions">
+            <div class="arch-assumptions-title">Assumptions</div>
+            <div class="arch-assumptions-items">
+              <div class="arch-ass-item">
+                Message broker (SQS/Kafka) provisioned as new infra
+              </div>
+              <div class="arch-ass-item">
+                SDK updated to emit custom event types
+              </div>
+              <div class="arch-ass-item">
+                All inter-service comms via REST + JWT auth
+              </div>
+              <div class="arch-ass-item">
+                Player IDs consistent per game for MVP (no global identity
+                required)
+              </div>
+              <div class="arch-ass-item">
+                ~5M MAU across portfolio at launch
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 6 ══ -->
+      <div class="slide" id="s6">
+        <div class="slide-header">
+          <div class="slide-label">Product Design · Key Flows</div>
+          <div class="slide-num">06 / 12</div>
+        </div>
+        <h2>Key <span class="accent">User Flows</span></h2>
+        <div class="rule"></div>
+        <div class="flow-layout" style="margin-top: 14px">
+          <div class="flow-col">
+            <div class="flow-col-title">Campaign Setup Flow · Marketing</div>
+            <div
+              class="card"
+              style="
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 18px;
+              "
+            >
+              <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-content">
+                  <div class="flow-title">
+                    Log into playOps Campaign Builder
+                  </div>
+                  <div class="flow-body">
+                    Marketing user opens the new Campaign module — no
+                    engineering ticket required.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-content">
+                  <div class="flow-title">Define the Trigger</div>
+                  <div class="flow-body">
+                    Select source game (POP!), event type (level_achieved),
+                    condition (≥ 20). Set campaign dates and budget cap.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-content">
+                  <div class="flow-title">Configure the Reward</div>
+                  <div class="flow-body">
+                    Select reward type (Coupon), amount (10K chips), target game
+                    (Konami). Set per-player limit.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-content">
+                  <div class="flow-title">Set Eligibility Rules via AVA</div>
+                  <div class="flow-body">
+                    Filter by player segment, VIP tier, opt-in status. Preview
+                    estimated eligible audience.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">5</div>
+                <div class="flow-content">
+                  <div class="flow-title">Publish → Campaign Engine</div>
+                  <div class="flow-body">
+                    Campaign rules stored in Rules DB. Engine begins listening
+                    for matching events immediately.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flow-col">
+            <div class="flow-col-title">Player Runtime Flow · In-Game</div>
+            <div
+              class="card"
+              style="
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 18px;
+              "
+            >
+              <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-content">
+                  <div class="flow-title">Player achieves Level 20 in POP!</div>
+                  <div class="flow-body">Action occurs in game client.</div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-content">
+                  <div class="flow-title">SDK emits event to Event Bus</div>
+                  <div class="flow-body">
+                    <code>trackEvent("level_achieved", {level: 20})</code> —
+                    delivered within 500ms.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-content">
+                  <div class="flow-title">Campaign Engine evaluates rules</div>
+                  <div class="flow-body">
+                    Matches active campaign trigger. Idempotency check: has this
+                    player already been rewarded?
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-content">
+                  <div class="flow-title">AVA confirms eligibility</div>
+                  <div class="flow-body">
+                    Player is in target segment, opted in. Response &lt;100ms.
+                    If ineligible: logged, no reward issued.
+                  </div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">5</div>
+                <div class="flow-content">
+                  <div class="flow-title">
+                    Coupon generated → Robinhood awards
+                  </div>
+                  <div class="flow-body">
+                    10K chips credited to Konami account. SDK delivers in-game
+                    notification within <strong>5 seconds</strong>. Loyalty
+                    Ledger updated.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 7 ══ -->
+      <div class="slide" id="s7">
+        <div class="slide-header">
+          <div class="slide-label">Product Design · Core Epics</div>
+          <div class="slide-num">07 / 12</div>
+        </div>
+        <h2>
+          Core <span class="accent">Epics</span>
+          <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
+            >1 – 4</span
+          >
+        </h2>
+        <div class="rule"></div>
+        <div class="epics-grid" style="margin-top: 12px">
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 01</div>
+              <div class="tag">playOps</div>
+            </div>
+            <div class="epic-title">Campaign Builder — Self-Service UI</div>
+            <div class="epic-goal">
+              Marketing can create, configure, and publish a cross-game campaign
+              without engineering involvement.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Campaign setup completable in &lt;15 min by a non-technical user
+              </div>
+              <div class="epic-ac-item">
+                States: Draft → Preview → Scheduled → Live → Paused — all
+                manageable from UI
+              </div>
+              <div class="epic-ac-item">
+                UI validates required fields and shows estimated eligible
+                audience before publish
+              </div>
+              <div class="epic-ac-item">
+                Campaigns can be paused or cancelled in real-time without
+                engineering
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 02</div>
+              <div class="tag">SDK</div>
+            </div>
+            <div class="epic-title">Event Ingestion & Routing</div>
+            <div class="epic-goal">
+              SDK reliably captures standardised in-game events and delivers
+              them to the Campaign Engine within SLA.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                SDK supports configurable custom event types via config — no SDK
+                release required per new event
+              </div>
+              <div class="epic-ac-item">
+                Events delivered to Event Bus within 500ms, at-least-once
+                delivery guarantee
+              </div>
+              <div class="epic-ac-item">
+                Event payload includes: player_id, game_id, event_type, value,
+                timestamp
+              </div>
+              <div class="epic-ac-item">
+                Failed deliveries route to dead-letter queue with alerting; SDK
+                retries up to 3×
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 03</div>
+              <div class="tag-gold">Campaign Engine</div>
+            </div>
+            <div class="epic-title">Campaign Rule Engine</div>
+            <div class="epic-goal">
+              Automated evaluation of whether an incoming event should trigger a
+              reward — fast, idempotent, and failure-safe.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Trigger evaluation completes in &lt;200ms p99 under production
+                load
+              </div>
+              <div class="epic-ac-item">
+                Idempotency enforced per player per campaign — no duplicate
+                rewards on retries
+              </div>
+              <div class="epic-ac-item">
+                Engine state is recoverable after failure — no events lost
+                during restarts
+              </div>
+              <div class="epic-ac-item">
+                Supports campaign priority ordering when multiple rules match a
+                single event
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 04</div>
+              <div class="tag">AVA</div>
+            </div>
+            <div class="epic-title">Player Eligibility</div>
+            <div class="epic-goal">
+              Campaigns respect player segments, VIP tiers, and opt-in status
+              before any reward is issued.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                AVA eligibility API returns a decision within 100ms
+              </div>
+              <div class="epic-ac-item">
+                Eligibility rules are configurable in playOps and updateable on
+                live campaigns
+              </div>
+              <div class="epic-ac-item">
+                Ineligible events are logged to Loyalty Ledger but no reward is
+                triggered
+              </div>
+              <div class="epic-ac-item">
+                Marketing can preview estimated eligible audience size before
+                publishing
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 8 ══ -->
+      <div class="slide" id="s8">
+        <div class="slide-header">
+          <div class="slide-label">Product Design · Core Epics</div>
+          <div class="slide-num">08 / 12</div>
+        </div>
+        <h2>
+          Core <span class="accent">Epics</span>
+          <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
+            >5 – 8</span
+          >
+        </h2>
+        <div class="rule"></div>
+        <div class="epics-grid" style="margin-top: 12px">
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 05</div>
+              <div class="tag">Coupon · Robinhood</div>
+            </div>
+            <div class="epic-title">Reward Delivery</div>
+            <div class="epic-goal">
+              Players receive their reward automatically in the target game
+              within seconds of completing the challenge.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Reward credited to player's target game account within 2 seconds
+                of trigger evaluation
+              </div>
+              <div class="epic-ac-item">
+                In-game notification delivered via SDK within 5 seconds of
+                reward generation
+              </div>
+              <div class="epic-ac-item">
+                Failed deliveries retry up to 3× with exponential backoff;
+                failures alert on-call
+              </div>
+              <div class="epic-ac-item">
+                All reward events logged: player_id, campaign_id, reward_type,
+                amount, status, timestamp
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 06</div>
+              <div class="tag-gray">Loyalty Ledger</div>
+            </div>
+            <div class="epic-title">Cross-Game Tracking & Ledger</div>
+            <div class="epic-goal">
+              A unified, queryable audit trail of every campaign event across
+              all games — for CS, BI, and compliance.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Every trigger, eligibility check, and reward grant is logged
+                with full context
+              </div>
+              <div class="epic-ac-item">
+                Ledger queryable by BI tooling within 1 hour of event
+                (near-real-time pipeline)
+              </div>
+              <div class="epic-ac-item">
+                CS can view a player's full campaign history via a read-only
+                console view
+              </div>
+              <div class="epic-ac-item">
+                Schema versioned; new fields addable without breaking existing
+                consumers
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 07</div>
+              <div class="tag">playOps</div>
+            </div>
+            <div class="epic-title">Campaign Analytics Dashboard</div>
+            <div class="epic-goal">
+              Marketing has real-time visibility into campaign performance to
+              optimise live campaigns and plan future ones.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Per-campaign dashboard shows: triggers, eligibility pass rate,
+                rewards granted, redemption rate
+              </div>
+              <div class="epic-ac-item">
+                Alert fires if error rate &gt;1% or p99 latency &gt;5 seconds
+              </div>
+              <div class="epic-ac-item">
+                Campaign comparison view for A/B analysis; data refreshed every
+                5 minutes
+              </div>
+              <div class="epic-ac-item">
+                Accessible to Marketing and LiveOps without engineering access
+              </div>
+            </div>
+          </div>
+          <div class="epic-card">
+            <div class="epic-header">
+              <div class="epic-num">EPIC 08</div>
+              <div class="tag">SDK</div>
+            </div>
+            <div class="epic-title">SDK Modularisation</div>
+            <div class="epic-goal">
+              Game teams can integrate the cross-game event SDK with minimal
+              effort and zero disruption to existing functionality.
+            </div>
+            <div class="epic-ac-title">Acceptance Criteria</div>
+            <div class="epic-ac">
+              <div class="epic-ac-item">
+                Single <code>trackEvent(type, payload)</code> API — auth, retry,
+                batching handled internally
+              </div>
+              <div class="epic-ac-item">
+                Integration requires &lt;1 day of engineering effort per game
+                (validated with POP! pilot)
+              </div>
+              <div class="epic-ac-item">
+                New SDK version is backward compatible — existing AVA/playOps
+                integrations unaffected
+              </div>
+              <div class="epic-ac-item">
+                Integration guide and changelog published with every SDK release
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 9 ══ -->
+      <div class="slide" id="s9">
+        <div class="slide-header">
+          <div class="slide-label">Project Planning · Roadmap</div>
+          <div class="slide-num">09 / 12</div>
+        </div>
+        <h2>
+          Phased <span class="accent">Roadmap</span>
+          <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
+            >MVP → Scale → Optimise</span
+          >
+        </h2>
+        <div class="rule"></div>
+        <div class="roadmap-phases" style="margin-top: 14px">
+          <div class="roadmap-phase phase-1">
+            <div class="phase-label">Phase 1 · MVP</div>
+            <div class="phase-period">Month 1–2</div>
+            <div class="phase-name">Foundation & Internal Pilot</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                Event Bus infrastructure provisioned (SQS/Kafka)
+              </div>
+              <div class="phase-item">
+                SDK event tracking enabled on <strong>POP!</strong> (pilot game)
+              </div>
+              <div class="phase-item">
+                Campaign Engine v1: single trigger → single reward flow
+              </div>
+              <div class="phase-item">
+                Coupon + Robinhood REST API integration
+              </div>
+              <div class="phase-item">
+                Basic campaign creation in playOps (limited fields)
+              </div>
+              <div class="phase-item">
+                Loyalty Ledger schema + logging pipeline live
+              </div>
+              <div class="phase-item">
+                Technical validation of all 4 assumptions
+              </div>
+            </div>
+            <div class="phase-milestone">
+              1 live campaign: POP! → Konami (internal only)
+            </div>
+          </div>
+          <div class="roadmap-phase phase-2">
+            <div class="phase-label">Phase 2 · Scale</div>
+            <div class="phase-period">Month 3–4</div>
+            <div class="phase-name">Full Portfolio Rollout</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                SDK integrated across all 4 games (MyVegas, MGM, Konami)
+              </div>
+              <div class="phase-item">AVA player eligibility integration</div>
+              <div class="phase-item">
+                Full self-service Campaign Builder in playOps
+              </div>
+              <div class="phase-item">Campaign analytics dashboard live</div>
+              <div class="phase-item">
+                CS console view: player campaign history
+              </div>
+              <div class="phase-item">
+                Runbook and on-call playbook published
+              </div>
+              <div class="phase-item">Marketing + all game teams onboarded</div>
+            </div>
+            <div class="phase-milestone" style="color: var(--gold)">
+              Broad launch: all games + marketing self-service
+            </div>
+          </div>
+          <div class="roadmap-phase phase-3">
+            <div class="phase-label">Phase 3 · Optimise</div>
+            <div class="phase-period">Month 5–6</div>
+            <div class="phase-name">Intelligence & Extensibility</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                Compound campaign conditions (AND/OR trigger logic)
+              </div>
+              <div class="phase-item">
+                A/B campaign testing support in playOps
+              </div>
+              <div class="phase-item">
+                Automated SLA monitoring + PagerDuty alerting
+              </div>
+              <div class="phase-item">
+                External game API published for future game onboarding
+              </div>
+              <div class="phase-item">
+                Retrograde BI analysis on Phase 1–2 campaign ROI
+              </div>
+              <div class="phase-item">
+                v2 roadmap: multi-step campaigns, loyalty tiers
+              </div>
+            </div>
+            <div class="phase-milestone" style="color: #10b981">
+              Platform open to all current + future game titles
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 12px; display: flex; gap: 12px; flex-shrink: 0">
+          <div
+            class="card"
+            style="
+              flex: 1;
+              padding: 12px 16px;
+              display: flex;
+              gap: 10px;
+              align-items: center;
+            "
+          >
+            <div style="font-size: 18px">🎯</div>
+            <div>
+              <div
+                style="font-size: 13px; font-weight: 700; color: var(--text)"
+              >
+                MVP Definition
+              </div>
+              <div style="font-size: 12px; color: var(--muted)">
+                1 campaign live, end-to-end automated, no engineering required
+                after publish, logged to ledger
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+            style="
+              flex: 1;
+              padding: 12px 16px;
+              display: flex;
+              gap: 10px;
+              align-items: center;
+            "
+          >
+            <div style="font-size: 18px">🚀</div>
+            <div>
+              <div
+                style="font-size: 13px; font-weight: 700; color: var(--text)"
+              >
+                Business Value at MVP
+              </div>
+              <div style="font-size: 12px; color: var(--muted)">
+                First cross-game reward granted without an eng ticket — proof of
+                concept for Marketing + exec stakeholders
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 10 ══ -->
+      <div class="slide" id="s10">
+        <div class="slide-header">
+          <div class="slide-label">Project Planning · Success Metrics</div>
+          <div class="slide-num">10 / 12</div>
+        </div>
+        <h2>Success <span class="accent">Metrics</span></h2>
+        <div class="rule"></div>
+        <div class="metrics-layout" style="margin-top: 14px">
+          <div class="metrics-col">
+            <div class="metrics-col-header biz">Business Impact Metrics</div>
+            <div class="metric-card">
+              <div class="metric-name">Campaign Launch Velocity</div>
+              <div class="metric-target orange">&lt; 2 hrs</div>
+              <div class="metric-baseline">
+                vs. current baseline: <strong>2–3 weeks</strong>
+              </div>
+              <div class="metric-how">
+                <strong>Measured:</strong> playOps creation timestamp → go-live
+                timestamp, logged per campaign<br />
+                <strong>Monitored:</strong> Weekly marketing sync review +
+                monthly PM dashboard<br />
+                <strong>Owner:</strong> Marketing Lead + PM
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-name">Cross-Game DAU Lift</div>
+              <div class="metric-target gold">+15% DAU</div>
+              <div class="metric-baseline">
+                in reward-receiving game within 7 days post-campaign vs. control
+                cohort
+              </div>
+              <div class="metric-how">
+                <strong>Measured:</strong> BI attribution report — campaign
+                cohort vs. matched control group (propensity-scored)<br />
+                <strong>Monitored:</strong> Per-campaign post-mortem report;
+                shared with Marketing + Game leads<br />
+                <strong>Owner:</strong> BI / Data team
+              </div>
+            </div>
+          </div>
+          <div class="metrics-col">
+            <div class="metrics-col-header plat">
+              Platform Performance Metrics
+            </div>
+            <div class="metric-card">
+              <div class="metric-name">Reward Delivery Latency (p99)</div>
+              <div class="metric-target purple">&lt; 5 sec</div>
+              <div class="metric-baseline">
+                end-to-end: event trigger → player in-game notification
+              </div>
+              <div class="metric-how">
+                <strong>Measured:</strong> Timestamp delta logged at each hop
+                (Event Bus → Engine → Robinhood → SDK notify)<br />
+                <strong>Monitored:</strong> Live Datadog dashboard + PagerDuty
+                alert if p99 exceeds threshold<br />
+                <strong>Owner:</strong> Platform Engineering
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-name">Event Processing Error Rate</div>
+              <div class="metric-target green">&lt; 0.5%</div>
+              <div class="metric-baseline">
+                of events failing rule evaluation or reward delivery per day
+              </div>
+              <div class="metric-how">
+                <strong>Measured:</strong> Dead-letter queue volume ÷ total
+                events processed, per campaign + rolling daily<br />
+                <strong>Monitored:</strong> Live dashboard; PagerDuty alert if
+                rate exceeds 0.5% over 15-min window<br />
+                <strong>Owner:</strong> Platform Engineering + LiveOps
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 11 ══ -->
+      <div class="slide" id="s11">
+        <div class="slide-header">
+          <div class="slide-label">Project Planning · Rollout</div>
+          <div class="slide-num">11 / 12</div>
+        </div>
+        <h2>Rollout & <span class="accent">Communication</span> Plan</h2>
+        <div class="rule"></div>
+        <div class="rollout-table" style="margin-top: 12px">
+          <div class="rollout-row header">
+            <div class="rollout-cell">Stakeholder</div>
+            <div class="rollout-cell">Pre-Launch · Wks 1–4</div>
+            <div class="rollout-cell">Launch · Wk 5</div>
+            <div class="rollout-cell">Post-Launch · Wks 6–8</div>
+          </div>
+          <div class="rollout-row">
+            <div class="rollout-cell">
+              <div class="rollout-sh">LiveOps</div>
+              <div class="rollout-sh-sub">playOps Operators</div>
+            </div>
+            <div class="rollout-cell">
+              Campaign Builder training sessions; UAT of pilot campaign with
+              real data; sign-off on acceptance criteria
+            </div>
+            <div class="rollout-cell">
+              <strong>War room standby</strong> (48h); first campaign monitored
+              live; PM + Eng on call
+            </div>
+            <div class="rollout-cell">
+              Weekly ops review meetings; runbook published; escalation path to
+              Eng defined
+            </div>
+          </div>
+          <div class="rollout-row">
+            <div class="rollout-cell">
+              <div class="rollout-sh">BI / Data</div>
+              <div class="rollout-sh-sub">Analytics Team</div>
+            </div>
+            <div class="rollout-cell">
+              Loyalty Ledger schema docs delivered; BI dashboard provisioned;
+              test data validation in staging
+            </div>
+            <div class="rollout-cell">
+              Monitor dashboards live during launch; confirm data pipeline
+              latency within SLA
+            </div>
+            <div class="rollout-cell">
+              <strong>Weekly BI report</strong> shared with all stakeholders;
+              attribution model for DAU lift published per campaign
+            </div>
+          </div>
+          <div class="rollout-row">
+            <div class="rollout-cell">
+              <div class="rollout-sh">Customer Support</div>
+              <div class="rollout-sh-sub">CS Team</div>
+            </div>
+            <div class="rollout-cell">
+              Campaign History console access provisioned; FAQ doc for common
+              reward issues; escalation path to LiveOps defined
+            </div>
+            <div class="rollout-cell">
+              Briefed with campaign details and
+              <strong>player-facing messaging templates</strong>; ready for
+              first player contacts
+            </div>
+            <div class="rollout-cell">
+              Ticket review for reward issues; CS feedback loop to PM for v2
+              improvements
+            </div>
+          </div>
+        </div>
+        <div class="deliverables">
+          <div class="del-title">Launch Deliverables Checklist</div>
+          <div class="del-item">Campaign Builder user guide (LiveOps)</div>
+          <div class="del-item">Loyalty Ledger data dictionary (BI/Data)</div>
+          <div class="del-item">Campaign History console access (CS)</div>
+          <div class="del-item">
+            Player-facing messaging templates (CS + Marketing)
+          </div>
+          <div class="del-item">Incident runbook (Engineering + LiveOps)</div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 12 ══ -->
+      <div class="slide" id="s12">
+        <div class="slide-header">
+          <div class="slide-label">Project Planning · Risk Management</div>
+          <div class="slide-num">12 / 12</div>
+        </div>
+        <h2>Risks & <span class="accent">Mitigation</span></h2>
+        <div class="rule"></div>
+        <div class="risks-layout" style="margin-top: 14px">
+          <div class="risk-card">
+            <div>
+              <div class="tag">Technical</div>
+              <div class="risk-name">SDK Integration Fragmentation</div>
+              <div class="risk-badges">
+                <span class="risk-badge risk-high">Probability: High</span>
+                <span class="risk-badge risk-high">Impact: High</span>
+              </div>
+            </div>
+            <div class="risk-desc">
+              Four game apps with different tech stacks may require per-game
+              customisation for SDK integration, delaying Phase 1 rollout and
+              introducing inconsistent event schemas.
+            </div>
+            <div>
+              <div class="risk-mit-title">Mitigation</div>
+              <div class="risk-mit-items">
+                <div class="risk-mit-item">
+                  Standardise event schema and SDK contract in Sprint 1 — before
+                  any game team integration begins
+                </div>
+                <div class="risk-mit-item">
+                  Run technical spike with POP! in Week 1 to surface
+                  incompatibilities early and cheaply
+                </div>
+                <div class="risk-mit-item">
+                  Build SDK adapter layer so per-game differences don't reach
+                  the Campaign Engine
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="risk-card">
+            <div>
+              <div class="tag-gold">Organisational</div>
+              <div class="risk-name">Game Team Prioritisation Conflict</div>
+              <div class="risk-badges">
+                <span class="risk-badge risk-med">Probability: Med</span>
+                <span class="risk-badge risk-high">Impact: High</span>
+              </div>
+            </div>
+            <div class="risk-desc">
+              Each game team has its own roadmap. SDK integration work risks
+              being deprioritised in favour of game features, blocking Phase 2
+              portfolio rollout.
+            </div>
+            <div>
+              <div class="risk-mit-title">Mitigation</div>
+              <div class="risk-mit-items">
+                <div class="risk-mit-item">
+                  Secure exec sponsorship and formal commitment from each game
+                  lead before Sprint 1 kickoff
+                </div>
+                <div class="risk-mit-item">
+                  Scope integration as a &lt;1-day effort (low ask); embed a
+                  dedicated platform engineer per game team
+                </div>
+                <div class="risk-mit-item">
+                  Phase 1 requires only POP! — reduces dependency risk at MVP
+                  stage
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="risk-card">
+            <div>
+              <div class="tag-gray">Operational</div>
+              <div class="risk-name">Duplicate Reward Triggering</div>
+              <div class="risk-badges">
+                <span class="risk-badge risk-med">Probability: Med</span>
+                <span class="risk-badge risk-high">Impact: High</span>
+              </div>
+            </div>
+            <div class="risk-desc">
+              Network retries or race conditions in the Campaign Engine could
+              cause the same player to receive a reward multiple times —
+              creating financial exposure and player trust issues.
+            </div>
+            <div>
+              <div class="risk-mit-title">Mitigation</div>
+              <div class="risk-mit-items">
+                <div class="risk-mit-item">
+                  Implement idempotency keys at event ingestion — dedup before
+                  Campaign Engine evaluation
+                </div>
+                <div class="risk-mit-item">
+                  Add explicit deduplication check in Campaign Engine before
+                  calling Coupon or Robinhood
+                </div>
+                <div class="risk-mit-item">
+                  Loyalty Ledger audit log with duplicate detection alerting; CS
+                  console shows reward history per player
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /deck -->
+
+    <div id="nav">
+      <button class="nav-btn" id="prev">←</button>
+      <div class="dots" id="dots"></div>
+      <button class="nav-btn" id="next">→</button>
+      <div class="counter" id="counter">1 / 12</div>
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      const dotsEl = document.getElementById("dots");
+      const counter = document.getElementById("counter");
+      let current = 0;
+
+      slides.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (i === 0 ? " active" : "");
+        d.addEventListener("click", () => goTo(i));
+        dotsEl.appendChild(d);
+      });
+
+      function goTo(n) {
+        slides[current].classList.remove("active");
+        slides[current].classList.add("prev");
+        setTimeout(() => slides[current].classList.remove("prev"), 400);
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add("active");
+        document
+          .querySelectorAll(".dot")
+          .forEach((d, i) => d.classList.toggle("active", i === current));
+        counter.textContent = current + 1 + " / " + slides.length;
+      }
+
+      document
+        .getElementById("prev")
+        .addEventListener("click", () => goTo(current - 1));
+      document
+        .getElementById("next")
+        .addEventListener("click", () => goTo(current + 1));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") goTo(current + 1);
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") goTo(current - 1);
+      });
+    </script>
+  </body>
+</html>
