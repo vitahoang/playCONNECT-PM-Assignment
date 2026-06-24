@@ -10,14 +10,14 @@ Self-contained HTML slide deck for a playCONNECT Product Manager take-home assig
 
 ```bash
 python3 -m http.server 8765
-# Open http://localhost:8765/playCONNECT-PM-Assignment.html
+# Open http://localhost:8765/
 ```
 
 Use Playwright MCP to take screenshots for verification. Save all Playwright artifacts under `./playwright-mcp/`.
 
 ## File Overview
 
-- `playCONNECT-PM-Assignment.html` — 12-slide presentation deck (the main deliverable)
+- `index.html` — 12-slide presentation deck (the main deliverable)
 - `design-options.html` — 3 design option previews (reference only, not the deliverable)
 - `playCONNECT - Product Manager - Home assignment.pdf` — original assignment brief
 
