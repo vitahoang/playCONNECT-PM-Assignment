@@ -512,8 +512,36 @@
         min-height: 0;
         display: flex;
         flex-direction: column;
-        gap: 6px;
       }
+      .sh-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 12px;
+      }
+      .sh-table th {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+        text-align: left;
+        padding: 5px 10px;
+        border-bottom: 2px solid var(--border);
+      }
+      .sh-table td {
+        padding: 5px 10px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+        line-height: 1.35;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .sh-table tr:last-child td { border-bottom: none; }
+      .sh-table tr:nth-child(even) td { background: var(--bg-card); }
+      .sh-table .sh-name { font-weight: 700; color: var(--text); font-size: 12px; }
+      .sh-table .sh-sub { font-size: 10px; color: var(--muted2); margin-top: 1px; }
       .sh-discovery {
         flex: 0 0 auto;
         display: flex;
@@ -760,7 +788,7 @@
       /* SLIDE 5 */
       .arch-games-sdk-wrap {
         display: grid;
-        grid-template-columns: repeat(4, 110px);
+        grid-template-columns: repeat(5, 104px);
         gap: 8px;
       }
       .arch-game-sdk-col {
@@ -774,15 +802,15 @@
         background: var(--border2);
       }
       .arch-box.sdk {
-        background: var(--glow);
-        border-color: var(--border2);
-        color: var(--accent);
-        font-size: 12px;
+        background: #fff;
+        border: 1.5px dashed var(--border);
+        color: var(--text);
+        font-size: 11px;
         width: 100%;
         box-sizing: border-box;
       }
       .arch-fanin-connector {
-        width: 464px;
+        width: 552px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -796,6 +824,15 @@
         width: 1px;
         height: 14px;
         background: var(--border2);
+      }
+      .arch-main-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 6px;
+        column-gap: 0;
+        width: 100%;
+        align-items: start;
+        margin-top: 4px;
       }
       .arch-wrap {
         flex: 1;
@@ -825,15 +862,18 @@
         min-width: 88px;
       }
       .arch-box.game {
-        background: var(--bg-card2);
-        border-color: var(--border);
-        color: var(--muted);
+        background: #dcfce7;
+        border-color: #86efac;
+        color: #166534;
         font-size: 12px;
       }
       .arch-box.bus {
-        background: var(--glow);
-        border-color: var(--border2);
-        color: var(--accent);
+        background: #374151;
+        border-color: #374151;
+        color: #fff;
+        min-width: 280px;
+        text-align: center;
+        font-size: 14px;
       }
       .arch-box.engine {
         background: var(--accent);
@@ -1072,6 +1112,75 @@
         margin-top: 2px;
         flex-shrink: 0;
         font-weight: 700;
+      }
+
+      .epic-table {
+        width: 100%;
+        border-collapse: collapse;
+        flex: 1;
+        min-height: 0;
+        table-layout: fixed;
+      }
+      .epic-table th {
+        font-family: var(--font-head);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted2);
+        text-align: left;
+        padding: 6px 12px;
+        border-bottom: 2px solid var(--border);
+        background: transparent;
+      }
+      .epic-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+        line-height: 1.45;
+      }
+      .epic-table tr:last-child td { border-bottom: none; }
+      .epic-table tr:nth-child(even) td { background: var(--bg-card); }
+      .et-num {
+        font-family: var(--font-head);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+      .et-title {
+        font-family: var(--font-head);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .et-goal {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .et-ac {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .et-ac li {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.4;
+        display: flex;
+        gap: 5px;
+      }
+      .et-ac li::before {
+        content: "→";
+        color: var(--accent);
+        flex-shrink: 0;
+        font-size: 10px;
+        margin-top: 1px;
       }
 
       /* SLIDE 9 */
@@ -1450,7 +1559,6 @@
           <h1>
             Cross-Game<br /><span class="accent">Promotion</span><br />System
           </h1>
-          <div class="rule"></div>
           <p class="s1-subtitle">
             A unified, self-service campaign engine that rewards player actions
 across the multi-game portfolio — removing engineering bottlenecks
@@ -1486,7 +1594,6 @@ and letting marketing move faster.
       <!-- ══ SLIDE 2 ══ -->
       <div class="slide" id="s2">
         <h2>The <span class="accent">Problem</span></h2>
-        <div class="rule"></div>
         <div class="pain-grid" style="margin-top: 14px">
           <div class="pain-card">
             <div class="pain-num">01</div>
@@ -1541,74 +1648,89 @@ and letting marketing move faster.
       <!-- ══ SLIDE 3 ══ -->
       <div class="slide" id="s3">
         <h2>Stakeholder <span class="accent">Matrix</span></h2>
-        <div class="rule"></div>
         <div class="sh-layout" style="margin-top: 12px">
           <div class="sh-matrix">
-            <div class="sh-row header">
-              <div>Stakeholder</div>
-              <div style="text-align: center">Influence</div>
-              <div style="text-align: center">Interest</div>
-              <div>Role in This Initiative</div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">Marketing Team</div></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div class="sh-role">
-                Primary requester · Campaign designer · Self-service user
-              </div>
-            </div>
-            <div class="sh-row">
-              <div>
-                <div class="sh-name">Game Teams ×4</div>
-                <div class="sh-sub">MyVegas · POP! · MGM · Konami</div>
-              </div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div><span class="sh-badge med">Med</span></div>
-              <div class="sh-role">
-                Event source + reward destination · SDK integration owners
-              </div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">LiveOps / playOps</div></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div class="sh-role">
-                Daily platform operators · Campaign monitoring
-              </div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">Engineering / Platform</div></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div><span class="sh-badge med">Med</span></div>
-              <div class="sh-role">
-                System builders · API owners · Integration leads
-              </div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">BI / Data</div></div>
-              <div><span class="sh-badge med">Med</span></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div class="sh-role">
-                Attribution modelling · Dashboard & reporting
-              </div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">Customer Support</div></div>
-              <div><span class="sh-badge lo">Low</span></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div class="sh-role">
-                Player escalations · Reward issue resolution
-              </div>
-            </div>
-            <div class="sh-row">
-              <div><div class="sh-name">Players</div></div>
-              <div><span class="sh-badge lo">Low</span></div>
-              <div><span class="sh-badge hi">High</span></div>
-              <div class="sh-role">
-                End recipients · Validate engagement & reward value
-              </div>
-            </div>
+            <table class="sh-table">
+              <thead>
+                <tr>
+                  <th style="width:140px;">Stakeholder</th>
+                  <th style="width:180px;">Role / Responsibility</th>
+                  <th style="width:80px;">Power (Influence)</th>
+                  <th style="width:80px;">Interest (Impact)</th>
+                  <th style="width:110px;">Category</th>
+                  <th style="width:200px;">Engagement Strategy</th>
+                  <th>Communication Frequency</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="sh-name">Marketing Team</div></td>
+                  <td>Primary requester · Campaign designer · Self-service user</td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td>Manage Closely</td>
+                  <td>Collaborate on design decisions, weekly demos</td>
+                  <td>Daily / Weekly</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="sh-name">Game Teams ×4</div>
+                    <div class="sh-sub">MyVegas · POP! · MGM · Konami</div>
+                  </td>
+                  <td>Event source + reward destination · SDK integration owners</td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td><span class="sh-badge med">Med</span></td>
+                  <td>Keep Satisfied</td>
+                  <td>Technical alignment, SDK support sessions</td>
+                  <td>Weekly</td>
+                </tr>
+                <tr>
+                  <td><div class="sh-name">LiveOps / playOps</div></td>
+                  <td>Daily platform operators · Campaign monitoring</td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td>Manage Closely</td>
+                  <td>Co-design operations workflows, daily standups</td>
+                  <td>Daily</td>
+                </tr>
+                <tr>
+                  <td><div class="sh-name">Engineering / Platform</div></td>
+                  <td>System builders · API owners · Integration leads</td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td><span class="sh-badge med">Med</span></td>
+                  <td>Keep Satisfied</td>
+                  <td>Architecture reviews, clear specs per sprint</td>
+                  <td>Weekly / Per sprint</td>
+                </tr>
+                <tr>
+                  <td><div class="sh-name">BI / Data</div></td>
+                  <td>Attribution modelling · Dashboard & reporting</td>
+                  <td><span class="sh-badge med">Med</span></td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td>Keep Informed</td>
+                  <td>Share data schema, dashboard access</td>
+                  <td>Bi-weekly</td>
+                </tr>
+                <tr>
+                  <td><div class="sh-name">Customer Support</div></td>
+                  <td>Player escalations · Reward issue resolution</td>
+                  <td><span class="sh-badge lo">Low</span></td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td>Keep Informed</td>
+                  <td>Escalation playbooks, release notes</td>
+                  <td>Per release</td>
+                </tr>
+                <tr>
+                  <td><div class="sh-name">Players</div></td>
+                  <td>End recipients · Validate engagement & reward value</td>
+                  <td><span class="sh-badge lo">Low</span></td>
+                  <td><span class="sh-badge hi">High</span></td>
+                  <td>Monitor</td>
+                  <td>A/B test signals, CS ticket monitoring</td>
+                  <td>Indirect (via BI / CS)</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;flex:0 0 auto;">
             <div
@@ -1680,7 +1802,6 @@ and letting marketing move faster.
       <!-- ══ SLIDE 4 ══ -->
       <div class="slide" id="s4">
         <h2>Product <span class="accent">Alignment</span></h2>
-        <div class="rule"></div>
         <div class="comp-grid5" style="margin-top: 12px">
           <!-- SDK -->
           <div class="comp-card">
@@ -1811,9 +1932,6 @@ and letting marketing move faster.
                 <div class="comp-list-item util">
                   Enforce per-player redemption limits and code expiry rules
                 </div>
-                <div class="comp-list-item util">
-                  Return generated code to Campaign Engine in real-time
-                </div>
               </div>
             </div>
             <div class="comp-section">
@@ -1893,160 +2011,14 @@ and letting marketing move faster.
       <!-- ══ SLIDE 5 ══ -->
       <div class="slide" id="s5">
         <h2>System <span class="accent">Blueprint</span></h2>
-        <div class="rule"></div>
-        <div class="arch-wrap">
-          <!-- Games + SDK pairs -->
-          <div class="arch-games-sdk-wrap">
-            <div class="arch-game-sdk-col">
-              <div class="arch-box game">MyVegas</div>
-              <div class="arch-conn-v"></div>
-              <div class="arch-box sdk">SDK</div>
-              <div class="arch-conn-v"></div>
-            </div>
-            <div class="arch-game-sdk-col">
-              <div class="arch-box game">POP! Slots</div>
-              <div class="arch-conn-v"></div>
-              <div class="arch-box sdk">SDK</div>
-              <div class="arch-conn-v"></div>
-            </div>
-            <div class="arch-game-sdk-col">
-              <div class="arch-box game">MGM</div>
-              <div class="arch-conn-v"></div>
-              <div class="arch-box sdk">SDK</div>
-              <div class="arch-conn-v"></div>
-            </div>
-            <div class="arch-game-sdk-col">
-              <div class="arch-box game">Konami</div>
-              <div class="arch-conn-v"></div>
-              <div class="arch-box sdk">SDK</div>
-              <div class="arch-conn-v"></div>
-            </div>
-          </div>
-          <!-- Fan-in connector: horizontal bar + center drop -->
-          <div class="arch-fanin-connector">
-            <div class="arch-fanin-bar"></div>
-            <div class="arch-fanin-drop"></div>
-          </div>
-          <!-- Event Stream -->
-          <div class="arch-row">
-            <div class="arch-box bus">Event Stream</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;margin:2px 0;">
-            <div style="width:1px;height:14px;background:var(--border2)"></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:600px;gap:8px;">
-            <div></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-              <div class="arch-new-badge">NEW</div>
-              <div class="arch-box engine">Campaign Engine</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;padding-left:8px;">
-              <div style="color:var(--border2);font-size:13px;font-weight:700;white-space:nowrap;">◄────►</div>
-              <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;">
-                <div style="font-family:var(--font-head);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);">Campaign Rules DB</div>
-                <div class="arch-box ops">playOps Console</div>
-              </div>
-            </div>
-          </div>
-          <div class="arch-row" style="gap: 80px; margin-top: 6px">
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div
-                style="
-                  width: 1px;
-                  height: 14px;
-                  background: rgba(212, 160, 23, 0.4);
-                "
-              ></div>
-              <div class="arch-box ava">AVA (Eligibility)</div>
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div
-                style="
-                  width: 1px;
-                  height: 14px;
-                  background: rgba(16, 185, 129, 0.4);
-                "
-              ></div>
-              <div class="arch-row" style="gap: 8px">
-                <div class="arch-box coupon">Coupon</div>
-                <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
-                  ──►
-                </div>
-                <div class="arch-box robin">Robinhood</div>
-                <div style="color: rgba(16, 185, 129, 0.6); font-weight: 700">
-                  ──►
-                </div>
-                <div class="arch-box coupon" style="font-size: 11px">
-                  Player Account
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin: 2px 0;
-            "
-          >
-            <div
-              style="
-                width: 1px;
-                height: 14px;
-                background: rgba(99, 102, 241, 0.4);
-              "
-            ></div>
-          </div>
-          <div class="arch-row" style="gap: 10px">
-            <div class="arch-box ledger">Loyalty Ledger</div>
-            <div style="color: rgba(99, 102, 241, 0.5); font-weight: 700">
-              ──►
-            </div>
-            <div class="arch-box bi">BI / Analytics</div>
-          </div>
-          <div class="arch-assumptions">
-            <div class="arch-assumptions-title">Assumptions</div>
-            <div class="arch-assumptions-items">
-              <div class="arch-ass-item">
-                Message broker (SQS/Kafka) provisioned as new infra
-              </div>
-              <div class="arch-ass-item">
-                SDK updated to emit custom event types
-              </div>
-              <div class="arch-ass-item">
-                All inter-service comms via REST + JWT auth
-              </div>
-              <div class="arch-ass-item">
-                Player IDs consistent per game for MVP (no global identity
-                required)
-              </div>
-              <div class="arch-ass-item">
-                ~5M MAU across portfolio at launch
-              </div>
-            </div>
-          </div>
+        <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;">
+          <img src="assets/s5-diagram.png" alt="System Blueprint diagram" style="max-width:100%;max-height:100%;object-fit:contain;display:block;">
         </div>
       </div>
 
       <!-- ══ SLIDE 6 ══ -->
       <div class="slide" id="s6">
         <h2>Key <span class="accent">User Flows</span></h2>
-        <div class="rule"></div>
         <div class="flow-layout" style="margin-top: 14px">
           <div class="flow-col">
             <div class="flow-col-title">Campaign Setup Flow · Marketing</div>
@@ -2072,7 +2044,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">2</div>
                 <div class="flow-content">
@@ -2083,7 +2054,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">3</div>
                 <div class="flow-content">
@@ -2094,7 +2064,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">4</div>
                 <div class="flow-content">
@@ -2105,7 +2074,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">5</div>
                 <div class="flow-content">
@@ -2137,7 +2105,6 @@ and letting marketing move faster.
                   <div class="flow-body">Action occurs in game client.</div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">2</div>
                 <div class="flow-content">
@@ -2148,7 +2115,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">3</div>
                 <div class="flow-content">
@@ -2159,7 +2125,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">4</div>
                 <div class="flow-content">
@@ -2170,7 +2135,6 @@ and letting marketing move faster.
                   </div>
                 </div>
               </div>
-              <div class="flow-connector"></div>
               <div class="flow-step">
                 <div class="flow-num">5</div>
                 <div class="flow-content">
@@ -2197,127 +2161,62 @@ and letting marketing move faster.
             >1 – 4</span
           >
         </h2>
-        <div class="rule"></div>
-        <div class="epics-grid" style="margin-top: 12px">
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 01</div>
-              <div class="tag">playOps</div>
-            </div>
-            <div class="epic-title">Campaign Builder — Self-Service UI</div>
-            <div class="epic-goal">
-              Marketing can create, configure, and publish a cross-game campaign
-              without engineering involvement.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Campaign setup completable in &lt;15 min by a non-technical user
-              </div>
-              <div class="epic-ac-item">
-                States: Draft → Preview → Scheduled → Live → Paused — all
-                manageable from UI
-              </div>
-              <div class="epic-ac-item">
-                UI validates required fields and shows estimated eligible
-                audience before publish
-              </div>
-              <div class="epic-ac-item">
-                Campaigns can be paused or cancelled in real-time without
-                engineering
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 02</div>
-              <div class="tag">SDK</div>
-            </div>
-            <div class="epic-title">Event Ingestion & Routing</div>
-            <div class="epic-goal">
-              SDK reliably captures standardised in-game events and delivers
-              them to the Campaign Engine within SLA.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                SDK supports configurable custom event types via config — no SDK
-                release required per new event
-              </div>
-              <div class="epic-ac-item">
-                Events delivered to Event Bus within 500ms, at-least-once
-                delivery guarantee
-              </div>
-              <div class="epic-ac-item">
-                Event payload includes: player_id, game_id, event_type, value,
-                timestamp
-              </div>
-              <div class="epic-ac-item">
-                Failed deliveries route to dead-letter queue with alerting; SDK
-                retries up to 3×
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 03</div>
-              <div class="tag-gold">Campaign Engine</div>
-            </div>
-            <div class="epic-title">Campaign Rule Engine</div>
-            <div class="epic-goal">
-              Automated evaluation of whether an incoming event should trigger a
-              reward — fast, idempotent, and failure-safe.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Trigger evaluation completes in &lt;200ms p99 under production
-                load
-              </div>
-              <div class="epic-ac-item">
-                Idempotency enforced per player per campaign — no duplicate
-                rewards on retries
-              </div>
-              <div class="epic-ac-item">
-                Engine state is recoverable after failure — no events lost
-                during restarts
-              </div>
-              <div class="epic-ac-item">
-                Supports campaign priority ordering when multiple rules match a
-                single event
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 04</div>
-              <div class="tag">AVA</div>
-            </div>
-            <div class="epic-title">Player Eligibility</div>
-            <div class="epic-goal">
-              Campaigns respect player segments, VIP tiers, and opt-in status
-              before any reward is issued.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                AVA eligibility API returns a decision within 100ms
-              </div>
-              <div class="epic-ac-item">
-                Eligibility rules are configurable in playOps and updateable on
-                live campaigns
-              </div>
-              <div class="epic-ac-item">
-                Ineligible events are logged to Loyalty Ledger but no reward is
-                triggered
-              </div>
-              <div class="epic-ac-item">
-                Marketing can preview estimated eligible audience size before
-                publishing
-              </div>
-            </div>
-          </div>
-        </div>
+        <table class="epic-table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th style="width:110px;">Epic</th>
+              <th style="width:200px;">Title</th>
+              <th style="width:260px;">Goal</th>
+              <th>Acceptance Criteria</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="et-num">EPIC 01</div><div class="tag" style="margin-top:4px;">playOps</div></td>
+              <td><span class="et-title">Campaign Builder — Self-Service UI</span></td>
+              <td class="et-goal">Marketing can create, configure, and publish a cross-game campaign without engineering involvement.</td>
+              <td><ul class="et-ac">
+                <li>Campaign setup completable in &lt;15 min by a non-technical user</li>
+                <li>States: Draft → Preview → Scheduled → Live → Paused — all manageable from UI</li>
+                <li>UI validates required fields and shows estimated eligible audience before publish</li>
+                <li>Campaigns can be paused or cancelled in real-time without engineering</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 02</div><div class="tag" style="margin-top:4px;">SDK</div></td>
+              <td><span class="et-title">Event Ingestion &amp; Routing</span></td>
+              <td class="et-goal">SDK reliably captures standardised in-game events and delivers them to the Campaign Engine within SLA.</td>
+              <td><ul class="et-ac">
+                <li>SDK supports configurable custom event types via config — no SDK release required per new event</li>
+                <li>Events delivered to Event Bus within 500ms, at-least-once delivery guarantee</li>
+                <li>Event payload includes: player_id, game_id, event_type, value, timestamp</li>
+                <li>Failed deliveries route to dead-letter queue with alerting; SDK retries up to 3×</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 03</div><div class="tag-gold" style="margin-top:4px;">Campaign Engine</div></td>
+              <td><span class="et-title">Campaign Rule Engine</span></td>
+              <td class="et-goal">Automated evaluation of whether an incoming event should trigger a reward — fast, idempotent, and failure-safe.</td>
+              <td><ul class="et-ac">
+                <li>Trigger evaluation completes in &lt;200ms p99 under production load</li>
+                <li>Idempotency enforced per player per campaign — no duplicate rewards on retries</li>
+                <li>Engine state is recoverable after failure — no events lost during restarts</li>
+                <li>Supports campaign priority ordering when multiple rules match a single event</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 04</div><div class="tag" style="margin-top:4px;">AVA</div></td>
+              <td><span class="et-title">Player Eligibility</span></td>
+              <td class="et-goal">Campaigns respect player segments, VIP tiers, and opt-in status before any reward is issued.</td>
+              <td><ul class="et-ac">
+                <li>AVA eligibility API returns a decision within 100ms</li>
+                <li>Eligibility rules are configurable in playOps and updateable on live campaigns</li>
+                <li>Ineligible events are logged to Loyalty Ledger but no reward is triggered</li>
+                <li>Marketing can preview estimated eligible audience size before publishing</li>
+              </ul></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- ══ SLIDE 8 ══ -->
@@ -2328,126 +2227,62 @@ and letting marketing move faster.
             >5 – 8</span
           >
         </h2>
-        <div class="rule"></div>
-        <div class="epics-grid" style="margin-top: 12px">
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 05</div>
-              <div class="tag">Coupon · Robinhood</div>
-            </div>
-            <div class="epic-title">Reward Delivery</div>
-            <div class="epic-goal">
-              Players receive their reward automatically in the target game
-              within seconds of completing the challenge.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Reward credited to player's target game account within 2 seconds
-                of trigger evaluation
-              </div>
-              <div class="epic-ac-item">
-                In-game notification delivered via SDK within 5 seconds of
-                reward generation
-              </div>
-              <div class="epic-ac-item">
-                Failed deliveries retry up to 3× with exponential backoff;
-                failures alert on-call
-              </div>
-              <div class="epic-ac-item">
-                All reward events logged: player_id, campaign_id, reward_type,
-                amount, status, timestamp
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 06</div>
-              <div class="tag-gray">Loyalty Ledger</div>
-            </div>
-            <div class="epic-title">Cross-Game Tracking & Ledger</div>
-            <div class="epic-goal">
-              A unified, queryable audit trail of every campaign event across
-              all games — for CS, BI, and compliance.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Every trigger, eligibility check, and reward grant is logged
-                with full context
-              </div>
-              <div class="epic-ac-item">
-                Ledger queryable by BI tooling within 1 hour of event
-                (near-real-time pipeline)
-              </div>
-              <div class="epic-ac-item">
-                CS can view a player's full campaign history via a read-only
-                console view
-              </div>
-              <div class="epic-ac-item">
-                Schema versioned; new fields addable without breaking existing
-                consumers
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 07</div>
-              <div class="tag">playOps</div>
-            </div>
-            <div class="epic-title">Campaign Analytics Dashboard</div>
-            <div class="epic-goal">
-              Marketing has real-time visibility into campaign performance to
-              optimise live campaigns and plan future ones.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Per-campaign dashboard shows: triggers, eligibility pass rate,
-                rewards granted, redemption rate
-              </div>
-              <div class="epic-ac-item">
-                Alert fires if error rate &gt;1% or p99 latency &gt;5 seconds
-              </div>
-              <div class="epic-ac-item">
-                Campaign comparison view for A/B analysis; data refreshed every
-                5 minutes
-              </div>
-              <div class="epic-ac-item">
-                Accessible to Marketing and LiveOps without engineering access
-              </div>
-            </div>
-          </div>
-          <div class="epic-card">
-            <div class="epic-header">
-              <div class="epic-num">EPIC 08</div>
-              <div class="tag">SDK</div>
-            </div>
-            <div class="epic-title">SDK Modularisation</div>
-            <div class="epic-goal">
-              Game teams can integrate the cross-game event SDK with minimal
-              effort and zero disruption to existing functionality.
-            </div>
-            <div class="epic-ac-title">Acceptance Criteria</div>
-            <div class="epic-ac">
-              <div class="epic-ac-item">
-                Single <code>trackEvent(type, payload)</code> API — auth, retry,
-                batching handled internally
-              </div>
-              <div class="epic-ac-item">
-                Integration requires &lt;1 day of engineering effort per game
-                (validated with POP! pilot)
-              </div>
-              <div class="epic-ac-item">
-                New SDK version is backward compatible — existing AVA/playOps
-                integrations unaffected
-              </div>
-              <div class="epic-ac-item">
-                Integration guide and changelog published with every SDK release
-              </div>
-            </div>
-          </div>
-        </div>
+        <table class="epic-table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th style="width:110px;">Epic</th>
+              <th style="width:200px;">Title</th>
+              <th style="width:260px;">Goal</th>
+              <th>Acceptance Criteria</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="et-num">EPIC 05</div><div class="tag" style="margin-top:4px;">Coupon · Robinhood</div></td>
+              <td><span class="et-title">Reward Delivery</span></td>
+              <td class="et-goal">Players receive their reward automatically in the target game within seconds of completing the challenge.</td>
+              <td><ul class="et-ac">
+                <li>Reward credited to player's target game account within 2 seconds of trigger evaluation</li>
+                <li>In-game notification delivered via SDK within 5 seconds of reward generation</li>
+                <li>Failed deliveries retry up to 3× with exponential backoff; failures alert on-call</li>
+                <li>All reward events logged: player_id, campaign_id, reward_type, amount, status, timestamp</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 06</div><div class="tag-gray" style="margin-top:4px;">Loyalty Ledger</div></td>
+              <td><span class="et-title">Cross-Game Tracking &amp; Ledger</span></td>
+              <td class="et-goal">A unified, queryable audit trail of every campaign event across all games — for CS, BI, and compliance.</td>
+              <td><ul class="et-ac">
+                <li>Every trigger, eligibility check, and reward grant is logged with full context</li>
+                <li>Ledger queryable by BI tooling within 1 hour of event (near-real-time pipeline)</li>
+                <li>CS can view a player's full campaign history via a read-only console view</li>
+                <li>Schema versioned; new fields addable without breaking existing consumers</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 07</div><div class="tag" style="margin-top:4px;">playOps</div></td>
+              <td><span class="et-title">Campaign Analytics Dashboard</span></td>
+              <td class="et-goal">Marketing has real-time visibility into campaign performance to optimise live campaigns and plan future ones.</td>
+              <td><ul class="et-ac">
+                <li>Per-campaign dashboard shows: triggers, eligibility pass rate, rewards granted, redemption rate</li>
+                <li>Alert fires if error rate &gt;1% or p99 latency &gt;5 seconds</li>
+                <li>Campaign comparison view for A/B analysis; data refreshed every 5 minutes</li>
+                <li>Accessible to Marketing and LiveOps without engineering access</li>
+              </ul></td>
+            </tr>
+            <tr>
+              <td><div class="et-num">EPIC 08</div><div class="tag" style="margin-top:4px;">SDK</div></td>
+              <td><span class="et-title">SDK Modularisation</span></td>
+              <td class="et-goal">Game teams can integrate the cross-game event SDK with minimal effort and zero disruption to existing functionality.</td>
+              <td><ul class="et-ac">
+                <li>Single <code>trackEvent(type, payload)</code> API — auth, retry, batching handled internally</li>
+                <li>Integration requires &lt;1 day of engineering effort per game (validated with POP! pilot)</li>
+                <li>New SDK version is backward compatible — existing AVA/playOps integrations unaffected</li>
+                <li>Integration guide and changelog published with every SDK release</li>
+              </ul></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- ══ SLIDE 9 ══ -->
@@ -2458,7 +2293,6 @@ and letting marketing move faster.
             >MVP → Scale → Optimise</span
           >
         </h2>
-        <div class="rule"></div>
         <div class="roadmap-phases" style="margin-top: 14px">
           <div class="roadmap-phase phase-1">
             <div class="phase-label">Phase 1 · MVP</div>
@@ -2601,7 +2435,6 @@ and letting marketing move faster.
       <!-- ══ SLIDE 10 ══ -->
       <div class="slide" id="s10">
         <h2>Success <span class="accent">Metrics</span></h2>
-        <div class="rule"></div>
         <div class="metrics-layout" style="margin-top: 14px">
           <div class="metrics-col">
             <div class="metrics-col-header biz">Business Impact Metrics</div>
@@ -2674,7 +2507,6 @@ and letting marketing move faster.
       <!-- ══ SLIDE 11 ══ -->
       <div class="slide" id="s11">
         <h2>Rollout & <span class="accent">Communication</span> Plan</h2>
-        <div class="rule"></div>
         <div class="rollout-table" style="margin-top: 12px">
           <div class="rollout-row header">
             <div class="rollout-cell">Stakeholder</div>
@@ -2753,7 +2585,6 @@ and letting marketing move faster.
       <!-- ══ SLIDE 12 ══ -->
       <div class="slide" id="s12">
         <h2>Risks & <span class="accent">Mitigation</span></h2>
-        <div class="rule"></div>
         <div class="risks-layout" style="margin-top: 14px">
           <div class="risk-card">
             <div>
