@@ -614,10 +614,10 @@
       .comp-grid5 {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: auto;
-        align-items: start;
+        grid-template-rows: 1fr;
         gap: 10px;
-        flex: 0 0 auto;
+        flex: 1;
+        min-height: 0;
       }
       .comp-card {
         background: var(--bg-card);
@@ -717,7 +717,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        flex: 1;
+        flex-shrink: 0;
         margin-top: 8px;
       }
       .comp-new-label {
@@ -1404,7 +1404,6 @@
               PM Home Assignment
             </div>
           </div>
-          <div class="slide-num">01 / 12</div>
         </div>
         <div class="s1-body">
           <div class="s1-eyebrow">Product Strategy · Design · Execution</div>
@@ -1413,9 +1412,10 @@
           </h1>
           <div class="rule"></div>
           <p class="s1-subtitle">
-            A unified, self-service campaign engine that connects player actions
-            across the multi-game portfolio — eliminating engineering
-            bottlenecks and unlocking marketing velocity.
+            A unified, self-service campaign engine that rewards player actions
+across the multi-game portfolio — removing engineering bottlenecks
+and letting marketing move faster.
+
           </p>
           <div class="s1-meta">
             <div class="s1-meta-item">
@@ -1447,7 +1447,6 @@
       <div class="slide" id="s2">
         <div class="slide-header">
           <div class="slide-label">Problem Framing</div>
-          <div class="slide-num">02 / 12</div>
         </div>
         <h2>The <span class="accent">Problem</span></h2>
         <div class="rule"></div>
@@ -1460,7 +1459,9 @@
               pipelines and local configs. No shared player identity. No
               cross-game visibility.
             </div>
-            <div class="pain-impact">Impact → Zero portfolio-level insight</div>
+            <div class="pain-impact">
+              Impact → Hard to gain portfolio-level insight
+            </div>
           </div>
           <div class="pain-card">
             <div class="pain-num">02</div>
@@ -1478,30 +1479,24 @@
             <div class="pain-num">03</div>
             <div class="pain-title">Slow Time-to-Market</div>
             <div class="pain-body">
-              A single cross-game promotion takes 2–3 weeks to launch.
-              Competitors ship campaign updates in hours. Opportunities are
-              missed at every live event window.
+              A single cross-game promotion takes weeks to launch. Opportunities
+              are missed at every live event window.
             </div>
             <div class="pain-impact">
-              Impact → Lost revenue during peak windows
+              Impact → Lost opportunities during peak windows, hard to iterate
+              on campaigns
             </div>
           </div>
           <div class="pain-card">
             <div class="pain-num">04</div>
-            <div class="pain-title">No Campaign Visibility</div>
+            <div class="pain-title">No Cross-Game Campaign Visibility</div>
             <div class="pain-body">
-              Marketing has no unified view of campaign trigger rates, reward
-              redemptions, or cross-game retention impact. Decisions are made
-              without data.
+              Marketing has no unified view of cross-game campaign trigger
+              rates, reward redemptions, or cross-game retention impact.
             </div>
-            <div class="pain-impact">Impact → No feedback loop to optimise</div>
-          </div>
-        </div>
-        <div class="s2-stat">
-          <div class="s2-stat-num">100%</div>
-          <div class="s2-stat-label">
-            of cross-game campaigns currently require engineering intervention —
-            <strong>zero can be launched by Marketing independently</strong>
+            <div class="pain-impact">
+              Impact → Hard to build cross-game feedback loop to optimise
+            </div>
           </div>
         </div>
       </div>
@@ -1510,7 +1505,6 @@
       <div class="slide" id="s3">
         <div class="slide-header">
           <div class="slide-label">Problem Framing · Discovery</div>
-          <div class="slide-num">03 / 12</div>
         </div>
         <h2>Stakeholder <span class="accent">Matrix</span></h2>
         <div class="rule"></div>
@@ -1653,8 +1647,6 @@
       <!-- ══ SLIDE 4 ══ -->
       <div class="slide" id="s4">
         <div class="slide-header">
-          <div class="slide-label">Strategic Insight · Product Alignment</div>
-          <div class="slide-num">04 / 12</div>
         </div>
         <h2>Platform <span class="accent">Alignment</span></h2>
         <div class="rule"></div>
@@ -1857,10 +1849,14 @@
           <div class="comp-new-sep">—</div>
           <div class="comp-new-type">The Missing Orchestrator</div>
           <div class="comp-new-body" style="margin-left: 8px">
-            Subscribes to the Event Bus, evaluates active campaign rules, calls
-            AVA for eligibility, triggers Coupon + Robinhood, and logs every
-            action to the Loyalty Ledger. Unifies all 5 existing systems into a
-            single automated flow.
+            Unifies all 5 existing systems
+            into a single automated flow. <br />
+            1. Subscribes to the SDK event stream, evaluates active campaign
+            rules <br />
+            2. Calls AVA for eligibility <br />
+            3. Triggers Coupon to generate rewards.<br />
+            4. Calls Robinhood to award rewards to the player account. <br/ >
+            5. Logs and updates the Loyalty Ledger. 
           </div>
         </div>
       </div>
@@ -1869,7 +1865,6 @@
       <div class="slide" id="s5">
         <div class="slide-header">
           <div class="slide-label">Product Design · System Blueprint</div>
-          <div class="slide-num">05 / 12</div>
         </div>
         <h2>System <span class="accent">Blueprint</span></h2>
         <div class="rule"></div>
@@ -2047,7 +2042,6 @@
       <div class="slide" id="s6">
         <div class="slide-header">
           <div class="slide-label">Product Design · Key Flows</div>
-          <div class="slide-num">06 / 12</div>
         </div>
         <h2>Key <span class="accent">User Flows</span></h2>
         <div class="rule"></div>
@@ -2197,7 +2191,6 @@
       <div class="slide" id="s7">
         <div class="slide-header">
           <div class="slide-label">Product Design · Core Epics</div>
-          <div class="slide-num">07 / 12</div>
         </div>
         <h2>
           Core <span class="accent">Epics</span>
@@ -2332,7 +2325,6 @@
       <div class="slide" id="s8">
         <div class="slide-header">
           <div class="slide-label">Product Design · Core Epics</div>
-          <div class="slide-num">08 / 12</div>
         </div>
         <h2>
           Core <span class="accent">Epics</span>
@@ -2466,7 +2458,6 @@
       <div class="slide" id="s9">
         <div class="slide-header">
           <div class="slide-label">Project Planning · Roadmap</div>
-          <div class="slide-num">09 / 12</div>
         </div>
         <h2>
           Phased <span class="accent">Roadmap</span>
@@ -2618,7 +2609,6 @@
       <div class="slide" id="s10">
         <div class="slide-header">
           <div class="slide-label">Project Planning · Success Metrics</div>
-          <div class="slide-num">10 / 12</div>
         </div>
         <h2>Success <span class="accent">Metrics</span></h2>
         <div class="rule"></div>
@@ -2695,7 +2685,6 @@
       <div class="slide" id="s11">
         <div class="slide-header">
           <div class="slide-label">Project Planning · Rollout</div>
-          <div class="slide-num">11 / 12</div>
         </div>
         <h2>Rollout & <span class="accent">Communication</span> Plan</h2>
         <div class="rule"></div>
@@ -2778,7 +2767,6 @@
       <div class="slide" id="s12">
         <div class="slide-header">
           <div class="slide-label">Project Planning · Risk Management</div>
-          <div class="slide-num">12 / 12</div>
         </div>
         <h2>Risks & <span class="accent">Mitigation</span></h2>
         <div class="rule"></div>
