@@ -2215,7 +2215,7 @@ and letting marketing move faster.
               <td><ul class="et-ac">
                 <li>One trackEvent API handles auth, retries, and batching internally; new event types need no SDK release</li>
                 <li>Drop-in integration with clear API docs; new versions stay backward compatible</li>
-                <li>Delivery SLA: 99% of events reach the Campaign Engine within 1s, 99.9% within 5s</li>
+                <li>Delivery SLA: X% of events reach the Campaign Engine within Xs, Y% within Ys</li>
               </ul></td>
             </tr>
             <tr>
@@ -2288,99 +2288,7 @@ and letting marketing move faster.
       <div class="slide" id="s8">
         <h2>
           Phased <span class="accent">Roadmap</span>
-          <span style="color: var(--muted2); font-size: 22px; font-weight: 400"
-            >MVP → Scale → Optimise</span
-          >
         </h2>
-        <div class="roadmap-phases" style="margin-top: 14px">
-          <div class="roadmap-phase phase-1">
-            <div class="phase-label">Phase 1 · MVP</div>
-            <div class="phase-period">Month 1–2</div>
-            <div class="phase-name">Foundation & Internal Pilot</div>
-            <div class="rule-full"></div>
-            <div class="phase-items">
-              <div class="phase-item">
-                Event Bus infrastructure provisioned (SQS/Kafka)
-              </div>
-              <div class="phase-item">
-                SDK event tracking enabled on <strong>POP!</strong> (pilot game)
-              </div>
-              <div class="phase-item">
-                Campaign Engine v1: single trigger → single reward flow
-              </div>
-              <div class="phase-item">
-                Coupon + Robinhood REST API integration
-              </div>
-              <div class="phase-item">
-                Basic campaign creation in playOps (limited fields)
-              </div>
-              <div class="phase-item">
-                Loyalty Ledger schema + logging pipeline live
-              </div>
-              <div class="phase-item">
-                Technical validation of all 4 assumptions
-              </div>
-            </div>
-            <div class="phase-milestone">
-              1 live campaign: POP! → Konami (internal only)
-            </div>
-          </div>
-          <div class="roadmap-phase phase-2">
-            <div class="phase-label">Phase 2 · Scale</div>
-            <div class="phase-period">Month 3–4</div>
-            <div class="phase-name">Full Portfolio Rollout</div>
-            <div class="rule-full"></div>
-            <div class="phase-items">
-              <div class="phase-item">
-                SDK integrated across all 4 games (MyVegas, MGM, Konami)
-              </div>
-              <div class="phase-item">AVA player eligibility integration</div>
-              <div class="phase-item">
-                Full self-service Campaign Builder in playOps
-              </div>
-              <div class="phase-item">Campaign analytics dashboard live</div>
-              <div class="phase-item">
-                CS console view: player campaign history
-              </div>
-              <div class="phase-item">
-                Runbook and on-call playbook published
-              </div>
-              <div class="phase-item">Marketing + all game teams onboarded</div>
-            </div>
-            <div class="phase-milestone" style="color: var(--gold)">
-              Broad launch: all games + marketing self-service
-            </div>
-          </div>
-          <div class="roadmap-phase phase-3">
-            <div class="phase-label">Phase 3 · Optimise</div>
-            <div class="phase-period">Month 5–6</div>
-            <div class="phase-name">Intelligence & Extensibility</div>
-            <div class="rule-full"></div>
-            <div class="phase-items">
-              <div class="phase-item">
-                Compound campaign conditions (AND/OR trigger logic)
-              </div>
-              <div class="phase-item">
-                A/B campaign testing support in playOps
-              </div>
-              <div class="phase-item">
-                Automated SLA monitoring + PagerDuty alerting
-              </div>
-              <div class="phase-item">
-                External game API published for future game onboarding
-              </div>
-              <div class="phase-item">
-                Retrograde BI analysis on Phase 1–2 campaign ROI
-              </div>
-              <div class="phase-item">
-                v2 roadmap: multi-step campaigns, loyalty tiers
-              </div>
-            </div>
-            <div class="phase-milestone" style="color: #10b981">
-              Platform open to all current + future game titles
-            </div>
-          </div>
-        </div>
         <div style="margin-top: 12px; display: flex; gap: 12px; flex-shrink: 0">
           <div
             class="card"
@@ -2429,6 +2337,83 @@ and letting marketing move faster.
             </div>
           </div>
         </div>
+        <div class="roadmap-phases" style="margin-top: 14px">
+          <div class="roadmap-phase phase-1">
+            <div class="phase-label">Phase 1 · MVP</div>
+            <div class="phase-period">Month 1–2</div>
+            <div class="phase-name">Foundation & Internal Pilot</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                Event SDK and Stream infrastructure provisioned
+              </div>
+              <div class="phase-item">
+                SDK event tracking enabled on POP! + Konami (pilot game)
+              </div>
+              <div class="phase-item">
+                Campaign Engine v1: single trigger → single reward flow
+              </div>
+              <div class="phase-item">
+                Coupon + Robinhood + AVA API integration
+              </div>
+              <div class="phase-item">
+                Basic campaign creation in playOps (limited fields)
+              </div>
+              <div class="phase-item">
+                Loyalty Ledger schema + logging pipeline live
+              </div>
+            </div>
+            <div class="phase-milestone">
+              1 live campaign: POP! → Konami (internal only)
+            </div>
+          </div>
+          <div class="roadmap-phase phase-2">
+            <div class="phase-label">Phase 2 · Scale</div>
+            <div class="phase-period">Month 3–4</div>
+            <div class="phase-name">Full Portfolio Rollout</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                SDK integrated across all 4 games (MyVegas, MGM, Konami)
+              </div>
+              <div class="phase-item">AVA player eligibility and targeting integration</div>
+              <div class="phase-item">
+                Full self-service Campaign Builder in playOps
+              </div>
+              <div class="phase-item">Campaign analytics dashboard live</div>
+              <div class="phase-item">
+                CS console view: player campaign history
+              </div>
+              <div class="phase-item">Marketing + all game teams onboarded</div>
+            </div>
+            <div class="phase-milestone" style="color: var(--gold)">
+              Broad launch: all games + marketing self-service
+            </div>
+          </div>
+          <div class="roadmap-phase phase-3">
+            <div class="phase-label">Phase 3 · Optimise</div>
+            <div class="phase-period">Month 5–6</div>
+            <div class="phase-name">Intelligence & Extensibility</div>
+            <div class="rule-full"></div>
+            <div class="phase-items">
+              <div class="phase-item">
+                Advanced campaign rules and award conditions (AND/OR trigger logic)
+              </div>
+              <div class="phase-item">
+                Support A/B campaign testing 
+              </div>
+              <div class="phase-item">
+                Support multi-step campaigns
+              </div>
+              <div class="phase-item">
+                Automated SLA monitoring and alerting for reward delivery latency and error rate
+              </div>
+            </div>
+            <div class="phase-milestone" style="color: #10b981">
+              Advance campaign setup for all games; SLA monitoring & alerting live
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ══ SLIDE 9 ══ -->
@@ -2448,7 +2433,7 @@ and letting marketing move faster.
                 timestamp, logged per campaign<br />
                 <strong>Monitored:</strong> Weekly marketing sync review +
                 monthly PM dashboard<br />
-                <strong>Owner:</strong> Marketing Lead + PM
+                <strong>Owner:</strong> Marketing + PM
               </div>
             </div>
             <div class="metric-card">
@@ -2463,7 +2448,7 @@ and letting marketing move faster.
                 cohort vs. matched control group (propensity-scored)<br />
                 <strong>Monitored:</strong> Per-campaign post-mortem report;
                 shared with Marketing + Game leads<br />
-                <strong>Owner:</strong> BI / Data team
+                <strong>Owner:</strong> BI / Data team, Marketing
               </div>
             </div>
           </div>
@@ -2472,16 +2457,16 @@ and letting marketing move faster.
               Platform Performance Metrics
             </div>
             <div class="metric-card">
-              <div class="metric-name">Reward Delivery Latency (p99)</div>
-              <div class="metric-target purple">&lt; 5 sec</div>
+              <div class="metric-name">Reward Delivery Latency</div>
+              <div class="metric-target purple">&lt; X sec</div>
               <div class="metric-baseline">
                 end-to-end: event trigger → player in-game notification
               </div>
               <div class="metric-how">
                 <strong>Measured:</strong> Timestamp delta logged at each hop
-                (Event Bus → Engine → Robinhood → SDK notify)<br />
-                <strong>Monitored:</strong> Live Datadog dashboard + PagerDuty
-                alert if p99 exceeds threshold<br />
+                (Game Client → SDK → Event Stream → Engine → Robinhood → AVA → Game Client)<br />
+                <strong>Monitored:</strong> Live Datadog dashboard +
+                Alert if exceeds threshold<br />
                 <strong>Owner:</strong> Platform Engineering
               </div>
             </div>
@@ -2494,7 +2479,7 @@ and letting marketing move faster.
               <div class="metric-how">
                 <strong>Measured:</strong> Dead-letter queue volume ÷ total
                 events processed, per campaign + rolling daily<br />
-                <strong>Monitored:</strong> Live dashboard; PagerDuty alert if
+                <strong>Monitored:</strong> Live dashboard; Alert if
                 rate exceeds 0.5% over 15-min window<br />
                 <strong>Owner:</strong> Platform Engineering + LiveOps
               </div>
@@ -2620,14 +2605,14 @@ and letting marketing move faster.
           <div class="risk-card">
             <div>
               <div class="tag-gold">Organisational</div>
-              <div class="risk-name">Game Team Prioritisation Conflict</div>
+              <div class="risk-name">Team Prioritisation Conflict</div>
               <div class="risk-badges">
                 <span class="risk-badge risk-med">Probability: Med</span>
                 <span class="risk-badge risk-high">Impact: High</span>
               </div>
             </div>
             <div class="risk-desc">
-              Each game team has its own roadmap. SDK integration work risks
+              Each game team has its own roadmap. Integration work risks
               being deprioritised in favour of game features, blocking Phase 2
               portfolio rollout.
             </div>
@@ -2635,8 +2620,7 @@ and letting marketing move faster.
               <div class="risk-mit-title">Mitigation</div>
               <div class="risk-mit-items">
                 <div class="risk-mit-item">
-                  Secure exec sponsorship and formal commitment from each game
-                  lead before Sprint 1 kickoff
+                  Secure exec and marketing team sponsorship and formal commitment from each team before Sprint 1 kickoff
                 </div>
                 <div class="risk-mit-item">
                   Scope integration as a &lt;1-day effort (low ask); embed a
